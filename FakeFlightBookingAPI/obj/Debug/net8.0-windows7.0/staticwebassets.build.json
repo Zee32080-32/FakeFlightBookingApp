@@ -1,0 +1,11 @@
+{
+  "Version": 1,
+  "Hash": "IoYq1JRJJ5HBh8cnuxMOEkWjkh7QNWQGHuqSC2Kzh4U=",
+  "Source": "FakeFlightBookingAPI",
+  "BasePath": "_content/FakeFlightBookingAPI",
+  "Mode": "Default",
+  "ManifestType": "Build",
+  "ReferencedProjectsConfiguration": [],
+  "DiscoveryPatterns": [],
+  "Assets": []
+}

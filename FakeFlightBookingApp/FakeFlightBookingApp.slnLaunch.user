@@ -1,0 +1,15 @@
+[
+  {
+    "Name": "Multiple Startups",
+    "Projects": [
+      {
+        "Name": "FakeFlightBookingApp.csproj",
+        "Action": "Start"
+      },
+      {
+        "Name": "..\\FakeFlightBookingAPI\\FakeFlightBookingAPI.csproj",
+        "Action": "Start"
+      }
+    ]
+  }
+]

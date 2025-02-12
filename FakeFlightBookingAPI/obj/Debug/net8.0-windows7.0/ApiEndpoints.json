@@ -1,0 +1,360 @@
+[
+  {
+    "ContainingType": "FakeFlightBookingAPI.Controllers.BookedFlightController",
+    "Method": "PostBookedFlight",
+    "RelativePath": "api/BookedFlight/AddBookedFlight",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "bookedFlight",
+        "Type": "SharedModels.BookedFlight",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "SharedModels.BookedFlight",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "FakeFlightBookingAPI.Controllers.BookedFlightController",
+    "Method": "DeleteBookedFlight",
+    "RelativePath": "api/BookedFlight/DeleteBookedFlightByID",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "FakeFlightBookingAPI.Controllers.BookedFlightController",
+    "Method": "GetBookedFlightByID",
+    "RelativePath": "api/BookedFlight/GetBookedFlightByID",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "SharedModels.BookedFlight",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "FakeFlightBookingAPI.Controllers.BookedFlightController",
+    "Method": "GetBookedFlightsByBookingID",
+    "RelativePath": "api/BookedFlight/GetBookedFlightsByBookingID",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "BookingId",
+        "Type": "System.Int32",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "SharedModels.BookedFlight",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "FakeFlightBookingAPI.Controllers.BookedFlightController",
+    "Method": "PutBookedFlight",
+    "RelativePath": "api/BookedFlight/UpdateBookedFlightByID",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": false
+      },
+      {
+        "Name": "bookedFlight",
+        "Type": "SharedModels.BookedFlight",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "FakeFlightBookingAPI.Controllers.FlightsController",
+    "Method": "SearchFlights",
+    "RelativePath": "api/Flights/search",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "From",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "To",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "DepartureDate",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "ReturnDate",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "NumberOfTickets",
+        "Type": "System.Int32",
+        "IsRequired": false
+      },
+      {
+        "Name": "TravelClass",
+        "Type": "System.String",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "FakeFlightBookingAPI.Controllers.FlightsController",
+    "Method": "SearchAirports",
+    "RelativePath": "api/Flights/Search-Airports",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "keyword",
+        "Type": "System.String",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "FakeFlightBookingAPI.Controllers.PaymentController",
+    "Method": "Cancel",
+    "RelativePath": "api/Payment/cancel",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "sessionId",
+        "Type": "System.String",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "FakeFlightBookingAPI.Controllers.PaymentController",
+    "Method": "CreateCheckoutSession",
+    "RelativePath": "api/Payment/create-checkout-session",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "request",
+        "Type": "FakeFlightBookingAPI.Models.CheckOutSeesionRequest",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "FakeFlightBookingAPI.Controllers.PaymentController",
+    "Method": "Success",
+    "RelativePath": "api/Payment/success",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "sessionId",
+        "Type": "System.String",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "FakeFlightBookingAPI.Controllers.PaymentController",
+    "Method": "Webhook",
+    "RelativePath": "api/Payment/webhook",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "FakeFlightBookingAPI.Controllers.UsersController",
+    "Method": "CustomerLogin",
+    "RelativePath": "api/Users/CustomerLogin",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "loginRequest",
+        "Type": "FakeFlightBookingAPI.Models.LoginRequest",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "FakeFlightBookingAPI.Controllers.UsersController",
+    "Method": "DeleteAccount",
+    "RelativePath": "api/Users/delete-account",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "userId",
+        "Type": "System.Int32",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "FakeFlightBookingAPI.Controllers.UsersController",
+    "Method": "InitiateRegistration",
+    "RelativePath": "api/Users/initiate-registration",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "customer",
+        "Type": "SharedModels.Customer",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "FakeFlightBookingAPI.Controllers.UsersController",
+    "Method": "GetProfile",
+    "RelativePath": "api/Users/profile",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "userId",
+        "Type": "System.Int32",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "FakeFlightBookingAPI.Controllers.UsersController",
+    "Method": "InitiatePasswordReset",
+    "RelativePath": "api/Users/Send-Reset-Password-Email",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "ForgotPassword_Poco",
+        "Type": "SharedModels.ForgotPassword_Poco",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "FakeFlightBookingAPI.Controllers.UsersController",
+    "Method": "UpdateProfile",
+    "RelativePath": "api/Users/update-profile",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "updatedCustomer",
+        "Type": "SharedModels.Customer",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "FakeFlightBookingAPI.Controllers.UsersController",
+    "Method": "VerifyCodeChangePassword",
+    "RelativePath": "api/Users/verify-code-and-change-password",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "ForgotPassword_Poco",
+        "Type": "SharedModels.ForgotPassword_Poco",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "FakeFlightBookingAPI.Controllers.UsersController",
+    "Method": "VerifyEmailAndCreateAccount",
+    "RelativePath": "api/Users/verify-email-and-create-account",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "emailVerification",
+        "Type": "FakeFlightBookingAPI.Models.EmailVerification",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  }
+]
