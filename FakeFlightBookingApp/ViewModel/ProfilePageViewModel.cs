@@ -9,6 +9,7 @@ using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using System.Net.Http;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
@@ -36,12 +37,18 @@ namespace FakeFlightBookingApp.ViewModel
         private string _lastName;
         private string _email;
         private string _phoneNumber;
+        private string _statusMessage;
 
-        public event PropertyChangedEventHandler PropertyChanged;
 
-        protected void OnPropertyChanged(string propertyName)
+
+        public string StatusMessage
         {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+            get => _statusMessage;
+            set
+            {
+                _statusMessage = value;
+                OnPropertyChanged(nameof(StatusMessage));
+            }
         }
 
         public ObservableCollection<BookedFlight> BookedFlights
@@ -116,17 +123,15 @@ namespace FakeFlightBookingApp.ViewModel
         {
             if (bookedFlight == null)
             {
-                MessageBox.Show("Could not retrieve flight details.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                StatusMessage = "Could not retrieve flight details.";
                 return;
             }
 
             string classType = bookedFlight.ClassType;
 
-            // Check if the ClassType contains "System.Windows.Controls.ComboBoxItem:"
             if (classType.Contains("System.Windows.Controls.ComboBoxItem:"))
             {
-                // Split and get the value after the ComboBoxItem part
-                classType = classType.Split(':')[1].Trim();  // Trim to remove any extra spaces
+                classType = classType.Split(':')[1].Trim();
             }
 
             string flightDetails = $"Price: {bookedFlight.Price:C}\n" +
@@ -135,7 +140,10 @@ namespace FakeFlightBookingApp.ViewModel
                                    $"Destination: {bookedFlight.Destination}\n" +
                                    $"Class Type: {classType}";
 
-            MessageBox.Show(flightDetails, "Flight Details", MessageBoxButton.OK, MessageBoxImage.Information);
+            // Show the new popup window
+            FlightDetailsWindow detailsWindow = new FlightDetailsWindow(flightDetails);
+            detailsWindow.Owner = Application.Current.MainWindow;
+            detailsWindow.ShowDialog(); // Opens as a modal dialog
         }
 
         private async Task ExecuteDeleteAccountCommand()
@@ -151,13 +159,13 @@ namespace FakeFlightBookingApp.ViewModel
 
             if (response.IsSuccessStatusCode)
             {
-                MessageBox.Show("Account deleted successfully.");
-                Application.Current.Shutdown();
+                StatusMessage = "Account deleted successfully.";
+                ExecuteMainPageCommand();
             }
             else
             {
                 string errorMessage = await response.Content.ReadAsStringAsync();
-                MessageBox.Show($"Failed to delete account: {errorMessage}");
+                StatusMessage = $"Failed to delete account: {errorMessage}";
             }
 
         }
@@ -169,14 +177,12 @@ namespace FakeFlightBookingApp.ViewModel
                 MessageBox.Show("User not authenticated.");
                 return;
             }
-            MessageBox.Show($"Fetching flights for UserID: {userId}");
 
             string apiUrl = $"https://localhost:7186/api/BookedFlight/GetBookedFlightByID?id={userId}";
             try
             {
                 HttpResponseMessage response = await _httpClient.GetAsync(apiUrl);
                 string responseText = await response.Content.ReadAsStringAsync();
-                MessageBox.Show($"API Response: {response.StatusCode}\n{responseText}");
 
                 if (response.IsSuccessStatusCode)
                 {
@@ -188,12 +194,12 @@ namespace FakeFlightBookingApp.ViewModel
                 }
                 else
                 {
-                    MessageBox.Show("Failed to fetch booked flights.");
+                    StatusMessage = "Failed to fetch booked flights.";
                 }
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Error fetching flights: {ex.Message}");
+                StatusMessage = $"Error fetching flights: {ex.Message}";
             }
         }
 
@@ -205,6 +211,13 @@ namespace FakeFlightBookingApp.ViewModel
             }
 
             return -1;
+        }
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        protected void OnPropertyChanged(string propertyName)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
 

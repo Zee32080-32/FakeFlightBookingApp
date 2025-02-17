@@ -162,9 +162,11 @@ D:\Zeeshan\Documents\FakeFligthBoolingApp_Parent\FakeFlightBookingApp\bin\Debug\
 D:\Zeeshan\Documents\FakeFligthBoolingApp_Parent\FakeFlightBookingApp\bin\Debug\net8.0-windows7.0\Microsoft.Web.WebView2.WinForms.xml
 D:\Zeeshan\Documents\FakeFligthBoolingApp_Parent\FakeFlightBookingApp\bin\Debug\net8.0-windows7.0\Microsoft.Web.WebView2.Wpf.xml
 D:\Zeeshan\Documents\FakeFligthBoolingApp_Parent\FakeFlightBookingApp\obj\Debug\net8.0-windows7.0\FakeFlightBookingApp.csproj.AssemblyReference.cache
+D:\Zeeshan\Documents\FakeFligthBoolingApp_Parent\FakeFlightBookingApp\obj\Debug\net8.0-windows7.0\Resources\Styles.baml
 D:\Zeeshan\Documents\FakeFligthBoolingApp_Parent\FakeFlightBookingApp\obj\Debug\net8.0-windows7.0\View\PaymentPage.baml
 D:\Zeeshan\Documents\FakeFligthBoolingApp_Parent\FakeFlightBookingApp\obj\Debug\net8.0-windows7.0\MainWindow.g.cs
 D:\Zeeshan\Documents\FakeFligthBoolingApp_Parent\FakeFlightBookingApp\obj\Debug\net8.0-windows7.0\View\CreateAccountView.g.cs
+D:\Zeeshan\Documents\FakeFligthBoolingApp_Parent\FakeFlightBookingApp\obj\Debug\net8.0-windows7.0\View\FlightDetailsWindow.g.cs
 D:\Zeeshan\Documents\FakeFligthBoolingApp_Parent\FakeFlightBookingApp\obj\Debug\net8.0-windows7.0\View\FlightTicketPage.g.cs
 D:\Zeeshan\Documents\FakeFligthBoolingApp_Parent\FakeFlightBookingApp\obj\Debug\net8.0-windows7.0\View\ForgotPassword.g.cs
 D:\Zeeshan\Documents\FakeFligthBoolingApp_Parent\FakeFlightBookingApp\obj\Debug\net8.0-windows7.0\View\LoginView.g.cs
@@ -176,8 +178,10 @@ D:\Zeeshan\Documents\FakeFligthBoolingApp_Parent\FakeFlightBookingApp\obj\Debug\
 D:\Zeeshan\Documents\FakeFligthBoolingApp_Parent\FakeFlightBookingApp\obj\Debug\net8.0-windows7.0\GeneratedInternalTypeHelper.g.cs
 D:\Zeeshan\Documents\FakeFligthBoolingApp_Parent\FakeFlightBookingApp\obj\Debug\net8.0-windows7.0\FakeFlightBookingApp_MarkupCompile.cache
 D:\Zeeshan\Documents\FakeFligthBoolingApp_Parent\FakeFlightBookingApp\obj\Debug\net8.0-windows7.0\FakeFlightBookingApp_MarkupCompile.lref
+D:\Zeeshan\Documents\FakeFligthBoolingApp_Parent\FakeFlightBookingApp\obj\Debug\net8.0-windows7.0\App.baml
 D:\Zeeshan\Documents\FakeFligthBoolingApp_Parent\FakeFlightBookingApp\obj\Debug\net8.0-windows7.0\MainWindow.baml
 D:\Zeeshan\Documents\FakeFligthBoolingApp_Parent\FakeFlightBookingApp\obj\Debug\net8.0-windows7.0\View\CreateAccountView.baml
+D:\Zeeshan\Documents\FakeFligthBoolingApp_Parent\FakeFlightBookingApp\obj\Debug\net8.0-windows7.0\View\FlightDetailsWindow.baml
 D:\Zeeshan\Documents\FakeFligthBoolingApp_Parent\FakeFlightBookingApp\obj\Debug\net8.0-windows7.0\View\FlightTicketPage.baml
 D:\Zeeshan\Documents\FakeFligthBoolingApp_Parent\FakeFlightBookingApp\obj\Debug\net8.0-windows7.0\View\ForgotPassword.baml
 D:\Zeeshan\Documents\FakeFligthBoolingApp_Parent\FakeFlightBookingApp\obj\Debug\net8.0-windows7.0\View\LoginView.baml
@@ -195,3 +199,7 @@ D:\Zeeshan\Documents\FakeFligthBoolingApp_Parent\FakeFlightBookingApp\obj\Debug\
 D:\Zeeshan\Documents\FakeFligthBoolingApp_Parent\FakeFlightBookingApp\obj\Debug\net8.0-windows7.0\FakeFlightBookingApp.pdb
 D:\Zeeshan\Documents\FakeFligthBoolingApp_Parent\FakeFlightBookingApp\obj\Debug\net8.0-windows7.0\FakeFlightBookingApp.genruntimeconfig.cache
 D:\Zeeshan\Documents\FakeFligthBoolingApp_Parent\FakeFlightBookingApp\obj\Debug\net8.0-windows7.0\ref\FakeFlightBookingApp.dll
+D:\Zeeshan\Documents\FakeFligthBoolingApp_Parent\FakeFlightBookingApp\obj\Debug\net8.0-windows7.0\View\AboutUs.g.cs
+D:\Zeeshan\Documents\FakeFligthBoolingApp_Parent\FakeFlightBookingApp\obj\Debug\net8.0-windows7.0\View\PrivacyPolicy.g.cs
+D:\Zeeshan\Documents\FakeFligthBoolingApp_Parent\FakeFlightBookingApp\obj\Debug\net8.0-windows7.0\View\AboutUs.baml
+D:\Zeeshan\Documents\FakeFligthBoolingApp_Parent\FakeFlightBookingApp\obj\Debug\net8.0-windows7.0\View\PrivacyPolicy.baml

@@ -8,10 +8,18 @@
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
       Loaded="Page_Loaded"
-      Background="Wheat"
+      Style="{StaticResource PageBackgroundStyle}" 
       Title="ProfilePage">
+    <Page.Resources>
+        <Style x:Key="DataGridHeaderStyle" TargetType="DataGridColumnHeader">
+            <Setter Property="Background" Value="#FF2E7D32"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="HorizontalContentAlignment" Value="Center"/>
+        </Style>
+    </Page.Resources>
     
-    <Grid>
+    <Grid Margin="10">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="2*"/>
             <ColumnDefinition Width="3*"/>
@@ -23,24 +31,33 @@
         </Grid.RowDefinitions>
 
         <!-- User Details on the Left -->
-        <StackPanel Margin="20" Grid.Row="0" Grid.Column="0">
-            <TextBlock Text="Profile Information" FontSize="20" FontWeight="Bold"/>
+        <StackPanel Grid.Row="0" Grid.Column="0">
+            <TextBlock Text="Profile Information" FontSize="24" Foreground="White" FontWeight="Bold"/>
         </StackPanel>
 
         <StackPanel Margin="20" Grid.Row="1" Grid.Column="0">
-            <TextBlock Text="Username: " FontWeight="Bold"/>
-            <TextBox Text="{Binding Username}" IsReadOnly="True"/> 
-            <TextBlock Text="First Name: " FontWeight="Bold"/>
-            <TextBox Text="{Binding FirstName}" IsReadOnly="True"/>
-            <TextBlock Text="Last Name: " FontWeight="Bold"/>
-            <TextBox Text="{Binding LastName}" IsReadOnly="True"/>
-            <TextBlock Text="Email Address: " FontWeight="Bold"/>
-            <TextBox Text="{Binding Email}" IsReadOnly="True"/>
+            <TextBlock Text="Username: " Foreground="White" FontWeight="Bold"/>
+            <TextBox Style="{StaticResource RoundedTextBoxStyle}" Text="{Binding Username}" IsReadOnly="True"/>
+            <TextBlock  Text="First Name: " Foreground="White" FontWeight="Bold"/>
+            <TextBox Style="{StaticResource RoundedTextBoxStyle}" Text="{Binding FirstName}" IsReadOnly="True"/>
+            <TextBlock Text="Last Name: " Foreground="White" FontWeight="Bold"/>
+            <TextBox Style="{StaticResource RoundedTextBoxStyle}" Text="{Binding LastName}" IsReadOnly="True"/>
+            <TextBlock Text="Email Address: " Foreground="White" FontWeight="Bold"/>
+            <TextBox Style="{StaticResource RoundedTextBoxStyle}" Text="{Binding Email}" IsReadOnly="True"/>
 
+
+            <!-- Status Label  -->
+            <Label x:Name="StatusLabel"
+                Content="{Binding StatusMessage}"
+                Foreground="White"
+                FontSize="14"
+                Margin="10"               
+                Padding="10" HorizontalAlignment="Left" VerticalAlignment="Bottom" 
+            />
         </StackPanel>
 
         <!-- Flight Table on the Right -->
-        <DataGrid Grid.Row="1" Grid.Column="1" ItemsSource="{Binding BookedFlights}" AutoGenerateColumns="False" Margin="20">
+        <DataGrid Grid.Row="1" Grid.Column="1" ColumnHeaderStyle="{StaticResource DataGridHeaderStyle}" ItemsSource="{Binding BookedFlights}" AutoGenerateColumns="False" Margin="10" Background="#FF46B859">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Flight Number" Binding="{Binding FlightNumber}"/>
                 <DataGridTextColumn Header="Booking Date" Binding="{Binding BookingDate}"/>
@@ -56,8 +73,8 @@
 
         <!-- Buttons at the Bottom Center -->
         <StackPanel Grid.Row="2" Grid.ColumnSpan="2" Orientation="Horizontal" HorizontalAlignment="Center" Margin="10">
-            <Button Content="Delete Account" Background="Red" Foreground="White" Width="120" Margin="5" Command="{Binding DeleteAccountCommand}"/>
-            <Button Content="Go to Main Page" Width="120" Margin="5" Command="{Binding MainPageCommand}"/>
+            <Button Style="{StaticResource RoundedButtonStyle}" Content="Delete Account" Background="Red" Foreground="White" Width="120" Margin="5" Command="{Binding DeleteAccountCommand}"/>
+            <Button Style="{StaticResource RoundedButtonStyle}" Content="Go to Main Page" Width="120" Margin="5" Command="{Binding MainPageCommand}"/>
         </StackPanel>
     </Grid>
 </Page>

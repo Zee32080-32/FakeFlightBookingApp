@@ -56,6 +56,17 @@ namespace FakeFlightBookingApp.ViewModel
 
         }
 
+        private string _statusMessage;
+        public string StatusMessage
+        {
+            get => _statusMessage;
+            set
+            {
+                _statusMessage = value;
+                OnPropertyChanged();
+            }
+        }
+
         public FlightOfferDTO FlightOffer
         {
             get => _flightOffer;
@@ -121,13 +132,13 @@ namespace FakeFlightBookingApp.ViewModel
                 else
                 {
                     var errorContent = await response.Content.ReadAsStringAsync();
-                    ShowMessage?.Invoke($"Error: {errorContent}");
+                    StatusMessage = $"Error: {errorContent}";
                     return null;
                 }
             }
             catch (Exception ex)
             {
-                ShowMessage?.Invoke($"An error occurred: {ex.Message}");
+                StatusMessage = $"An error occurred: {ex.Message}";
                 return null;
 
             }
@@ -153,9 +164,6 @@ namespace FakeFlightBookingApp.ViewModel
                 BookingDate = DateTime.UtcNow.ToString("o")
             };
 
-            ShowMessage?.Invoke($"DepartureTime: {FlightOffer.DepartureTime}, ArrivalTime: {FlightOffer.ArrivalTime}");
-            ShowMessage?.Invoke(Newtonsoft.Json.JsonConvert.SerializeObject(bookedFlight));
-
             string apiUrl = "https://localhost:7186/api/BookedFlight/AddBookedFlight";
 
             try
@@ -167,18 +175,18 @@ namespace FakeFlightBookingApp.ViewModel
 
                 if (response.IsSuccessStatusCode)
                 {
-                    ShowMessage?.Invoke("Booking successful!");
+                    StatusMessage = "Booking successful! Taking you to homepage";
                     NavigateToMainPage?.Invoke();
                 }
                 else
                 {
                     var errorContent = await response.Content.ReadAsStringAsync();
-                    ShowMessage?.Invoke($"Failed to save booking: {errorContent}");
+                    StatusMessage = $"Failed to save booking: {errorContent} + Try again later please";
                 }
             }
             catch (Exception ex)
             {
-                ShowMessage?.Invoke($"An error occurred: {ex.Message}");
+                StatusMessage = $"An error occurred: {ex.Message}";
             }
         }
         public void OnPaymentSuccess()
@@ -198,8 +206,7 @@ namespace FakeFlightBookingApp.ViewModel
             }
             else
             {
-                ShowMessage?.Invoke("User not authenticated. Please log in.");
-                return -1; // Return an invalid value or handle appropriately
+                return -1; 
             }
 
         }

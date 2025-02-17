@@ -52,7 +52,6 @@ namespace FakeFlightBookingApp.View
             }
         }
 
-        // Handle the ConfirmPasswordBox_PasswordChanged event to update the ViewModel's ConfirmPassword property
         private void ConfirmPasswordBox_PasswordChanged(object sender, RoutedEventArgs e)
         {
             if (sender is PasswordBox passwordBox && DataContext is CreateAccountViewModel viewModel)
@@ -60,6 +59,7 @@ namespace FakeFlightBookingApp.View
                 viewModel.ConfirmPassword = passwordBox.Password;
             }
         }
+
 
 
     }

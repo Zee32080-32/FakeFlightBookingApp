@@ -7,14 +7,16 @@
       xmlns:vm="clr-namespace:FakeFlightBookingApp.ViewModel"
       mc:Ignorable="d"
       d:DesignHeight="450" d:DesignWidth="950"
+      Style="{StaticResource PageBackgroundStyle}"
       Loaded="Page_Loaded"
       Title="Flight Tickets">
 
-    <Grid Background="White">
+    <Grid Margin="10">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
+            <RowDefinition Height="0.25*" />
         </Grid.RowDefinitions>
 
         <!-- Header -->
@@ -24,35 +26,36 @@
                    HorizontalAlignment="Center" 
                    VerticalAlignment="Center" 
                    Grid.Row="0" 
-                   Margin="10" />
+                   Margin="10" Foreground="White" />
 
         <!-- Search Query Display -->
-        <Border Grid.Row="1" Background="LightGray" Padding="10" Margin="10">
-            <TextBlock FontSize="16" TextWrapping="Wrap" TextAlignment="Center" Text="{Binding SearchQuery}" />
+        <Border Grid.Row="1"  Padding="10" Margin="10">
+            <TextBlock FontSize="16" TextWrapping="Wrap" TextAlignment="Center" Text="{Binding SearchQuery}" Foreground="White" />
         </Border>
 
         <!-- Results ListView -->
-        <ListView ItemsSource="{Binding FlightOffers}" Grid.Row="2" Margin="10">
+        <ListView ItemsSource="{Binding FlightOffers}" Grid.Row="2" Margin="10" Background="{x:Null}">
             <ListView.ItemTemplate>
                 <DataTemplate>
-                    <StackPanel Margin="5" Background="LightGray">
-                        <TextBlock Text="Flight Number: " FontWeight="Bold"/>
-                        <TextBlock Text="{Binding FlightNumber}" />
+                    <StackPanel Margin="5" >
+                        <TextBlock Text="Flight Number: " FontWeight="Bold"  Foreground="White"/>
+                        <TextBlock Text="{Binding FlightNumber}" Foreground="White"/>
 
-                        <TextBlock Text="Price: " FontWeight="Bold"/>
-                        <TextBlock Text="{Binding Price}" />
+                        <TextBlock Text="Price: " FontWeight="Bold"  Foreground="White"/>
+                        <TextBlock Text="{Binding Price}"  Foreground="White"/>
 
-                        <TextBlock Text="Departure Time: " FontWeight="Bold"/>
-                        <TextBlock Text="{Binding DepartureTime}" />
+                        <TextBlock Text="Departure Time: " FontWeight="Bold"  Foreground="White"/>
+                        <TextBlock Text="{Binding DepartureTime}" Foreground="White" />
 
-                        <TextBlock Text="Arrival Time: " FontWeight="Bold"/>
-                        <TextBlock Text="{Binding ArrivalTime}" />
+                        <TextBlock Text="Arrival Time: " FontWeight="Bold"  Foreground="White"/>
+                        <TextBlock Text="{Binding ArrivalTime}"  Foreground="White"/>
 
-                        <TextBlock Text="Duration: " FontWeight="Bold"/>
-                        <TextBlock Text="{Binding Duration}" />
+                        <TextBlock Text="Duration: " FontWeight="Bold"  Foreground="White"/>
+                        <TextBlock Text="{Binding Duration}"  Foreground="White"/>
 
                         <Button Content="Buy Ticket" 
                             Command="{Binding DataContext.BuyTicketCommand, RelativeSource={RelativeSource AncestorType=Page}}" 
+                            Style="{StaticResource RoundedButtonStyle}"
                             CommandParameter="{Binding .}" 
                             Margin="0,5,0,0" 
                         />
@@ -60,8 +63,15 @@
                 </DataTemplate>
             </ListView.ItemTemplate>
         </ListView>
-        <Button Content="Go back to Main Page" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="20,0,0,0" Command="{Binding MainPageCommand}"/>
-
+        <Button Content="Go back to Main Page" HorizontalAlignment="Left" VerticalAlignment="Center" Style="{StaticResource RoundedButtonStyle}" Margin="10" Command="{Binding MainPageCommand}"/>
+        <!-- Status Label  -->
+        <Label x:Name="StatusLabel"
+            Content="{Binding StatusMessage}"
+            Foreground="White"
+            FontSize="14"
+            HorizontalAlignment="Left"
+            Grid.Row="3"
+        />
     </Grid>
 
 </Page>

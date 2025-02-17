@@ -32,7 +32,19 @@ namespace FakeFlightBookingApp.ViewModel
         public ICommand LoginPageCommand { get; }
         public ICommand SendResetCodeCommand { get; }
         public ICommand VerifyCodeANDsaveNewPasswordCommand { get; }
+        public ICommand MainPageCommand { get; }
 
+
+        private string _statusMessage;
+        public string StatusMessage
+        {
+            get => _statusMessage;
+            set
+            {
+                _statusMessage = value;
+                OnPropertyChanged();
+            }
+        }
         public string Email
         {
             get { return _email; }
@@ -89,14 +101,20 @@ namespace FakeFlightBookingApp.ViewModel
             _httpClient = httpClient;
             SendResetCodeCommand = new RelayCommand(async () => await SendResetCodeAsync());
             VerifyCodeANDsaveNewPasswordCommand = new RelayCommand(async () => await VerifyCodeANDsaveNewPasswordAsync());
+            MainPageCommand = new RelayCommand(ExecuteGoToMainPage);
             LoginPageCommand = new RelayCommand(ExecuteGoToLoginPage);
 
+        }
+
+        private async void ExecuteGoToMainPage()
+        {
+            var MainPageView = new MainPageView();
+            Application.Current.MainWindow.Content = MainPageView;
         }
         private async void ExecuteGoToLoginPage()
         {
             var LoginView = new LoginView();
             Application.Current.MainWindow.Content = LoginView;
-
 
         }
 
@@ -112,8 +130,8 @@ namespace FakeFlightBookingApp.ViewModel
 
             if (string.IsNullOrEmpty(Email))
             {
-                ShowMessage?.Invoke("Please enter your email address.");
-                Message = "Please enter your email address.";
+                //ShowMessage?.Invoke("Please enter your email address.");
+                StatusMessage = "Please enter your email address.";
                 return;
             }
 
@@ -122,7 +140,7 @@ namespace FakeFlightBookingApp.ViewModel
 
             if (response.IsSuccessStatusCode)
             {
-                ShowMessage?.Invoke("If this email is registered, you will receive a password reset link.");
+                StatusMessage = "If this email is registered, you will receive a password reset link.";
                 IsCodeInputVisible = Visibility.Visible; // Make code input visible
                 IsPasswordChangeVisible = Visibility.Visible;
 
@@ -131,25 +149,22 @@ namespace FakeFlightBookingApp.ViewModel
             else
             {
                 var errorMessage = await response.Content.ReadAsStringAsync();
-                Message = $"Error: {errorMessage}";
+                StatusMessage = $"Error: {errorMessage}";
             }
         }
 
         internal async Task VerifyCodeANDsaveNewPasswordAsync()
         {
-            ShowMessage?.Invoke("CodeVerifyAsync_Pressed");
             if (string.IsNullOrEmpty(Code) || string.IsNullOrEmpty(NewPassword) || string.IsNullOrEmpty(RepeatPassword))
             {
-                ShowMessage?.Invoke("Please fill in all fields");
-                Message = "Please fill in all fields";
+                //ShowMessage?.Invoke("Please fill in all fields");
+                StatusMessage = "Please fill in all fields";
                 return;
             }
 
             if (NewPassword != RepeatPassword)
             {
-                ShowMessage?.Invoke("New passwords do not match.");
-                Message = "New passwords do not match.";
-
+                StatusMessage = "New passwords do not match.";
                 return;
             }
 
@@ -164,14 +179,13 @@ namespace FakeFlightBookingApp.ViewModel
 
             if (response.IsSuccessStatusCode)
             {
-                ShowMessage?.Invoke("Password reset successfully.");
-                Message = "Password reset successfully.";
+                StatusMessage = "Password reset successfully.";
 
             }
             else
             {
                 var errorMessage = await response.Content.ReadAsStringAsync();
-                Message = $"Error: {errorMessage}";
+                StatusMessage = $"Error: {errorMessage}";
             }
         }
       

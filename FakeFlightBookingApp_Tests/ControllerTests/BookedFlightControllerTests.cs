@@ -63,23 +63,27 @@ namespace FakeFlightBookingApp_Tests.ControllerTests
 
 
         [Fact]
-        public async Task BookedFlightController_GetBookedFlightByID_ReturnsListofBookedFlights()
+        public async Task BookedFlightController_GetBookedFlightByID_ReturnsListOfBookedFlights()
         {
-            //Arrange
-            var testBookedFlight = _testBookedFlight;
-            _dbContext.BookedFlights.Add(testBookedFlight);
+            // Arrange
+            _dbContext.CustomerUsers.Add(_testCustomer);
             await _dbContext.SaveChangesAsync();
 
+            _testBookedFlight.CustomerId = _testCustomer.Id; // Ensure it matches the test customer ID
+            _dbContext.BookedFlights.Add(_testBookedFlight);
+            await _dbContext.SaveChangesAsync();
 
             // Act
-            var result = await _controller.GetBookedFlightByID(1);
+            var result = await _controller.GetBookedFlightByID(_testCustomer.Id);
 
             // Assert
-            var okResult = Assert.IsType<ActionResult<BookedFlight>>(result);
-            var value = Assert.IsType<BookedFlight>(okResult.Value);
-            Assert.Equal(1, value.BookingId);
+            var okResult = Assert.IsType<OkObjectResult>(result.Result);
+            var bookedFlights = Assert.IsType<List<BookedFlight>>(okResult.Value);
 
+            Assert.Single(bookedFlights);
+            Assert.Equal(_testBookedFlight.FlightNumber, bookedFlights[0].FlightNumber);
         }
+
 
         [Fact]
         public async Task BookedFlightController_PostBookedFlight_AddBookedFlight()

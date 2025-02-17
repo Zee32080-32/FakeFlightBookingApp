@@ -1,0 +1,65 @@
+﻿<Window x:Class="FakeFlightBookingApp.View.FlightDetailsWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:FakeFlightBookingApp.View"
+        mc:Ignorable="d"
+        Height="300"
+        Width="400"
+        WindowStartupLocation="CenterOwner"
+        ResizeMode="NoResize"
+        Foreground="White"
+        BorderBrush="#FF274DC3"
+        BorderThickness="3"
+        FontFamily="Segoe UI"
+        FontSize="14">
+
+    <Window.Background>
+        <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+            <GradientStop Color="#FF46B859" Offset="1"/>
+            <GradientStop Color="#FF46B68E" Offset="0.072"/>
+        </LinearGradientBrush>
+    </Window.Background>
+
+    <Grid Margin="10">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="40"/>
+        </Grid.RowDefinitions>
+
+        <!-- Title -->
+        <TextBlock Text="Flight Details"
+            FontSize="18"
+            FontWeight="Bold"
+            HorizontalAlignment="Center"
+            Margin="0,0,0,10"
+        />
+
+        <!-- Flight Info -->
+        <TextBlock x:Name="FlightInfoTextBlock"
+            Grid.Row="1"
+            TextWrapping="Wrap"
+            Margin="5"
+        />
+
+        <!-- Close Button -->
+        <Button Content="Close"
+            Style="{StaticResource RoundedButtonStyle}"
+            Grid.Row="5"
+            Width="100"
+            Height="40"
+            HorizontalAlignment="Center"
+            Click="CloseButton_Click"
+            Background="#FF274DC3"
+            Foreground="White"
+            FontWeight="Bold"
+            BorderBrush="Transparent"
+            Cursor="Hand"
+        />
+    </Grid>
+</Window>

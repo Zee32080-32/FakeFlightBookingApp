@@ -8,8 +8,10 @@ using System.Windows;
 using System.Windows.Input;
 using System.Windows.Navigation;
 using CommunityToolkit.Mvvm.Input;
+using FakeFlightBookingApp.Model;
 using FakeFlightBookingApp.View;
 using Newtonsoft.Json;
+using SharedModels;
 
 namespace FakeFlightBookingApp.ViewModel
 {
@@ -17,6 +19,12 @@ namespace FakeFlightBookingApp.ViewModel
     {
         private readonly HttpClient _httpClient;
 
+        private Visibility _isVerificationVisible = Visibility.Hidden;
+        public Visibility IsVerificationVisible
+        {
+            get { return _isVerificationVisible; }
+            set { _isVerificationVisible = value; OnPropertyChanged(); }
+        }
 
         // Properties bound to the View
         private string _firstName;
@@ -76,13 +84,25 @@ namespace FakeFlightBookingApp.ViewModel
             set { _verificationCode = value; OnPropertyChanged(); }
         }
 
+
+        private string _homePageImage;
+        public string HomePageImage
+        {
+            get => _homePageImage;
+            set
+            {
+                _homePageImage = value;
+                OnPropertyChanged(nameof(HomePageImage));
+            }
+        }
+
         // Command for creating account
         public ICommand CreateAccountCommand { get; private set; }
 
         // Command for verifying email
         public ICommand VerifyEmailCommand { get; }
-
         public ICommand LoginPageCommand { get; }
+        public ICommand MainPageCommand { get; }
 
         private async void ExecuteCreateAccountCommand()
         {
@@ -102,30 +122,59 @@ namespace FakeFlightBookingApp.ViewModel
     
         }
 
-        public CreateAccountViewModel(HttpClient httpClient)
+        private string _statusMessage;
+        public string StatusMessage
+        {
+            get => _statusMessage;
+            set
+            {
+                _statusMessage = value;
+                OnPropertyChanged();
+            }
+        }
+
+
+
+        private readonly INavigationService _navigationService;
+        public CreateAccountViewModel(HttpClient httpClient, INavigationService navigationService)
         {
             _httpClient = httpClient;
+            _navigationService = navigationService;  
             CreateAccountCommand = new RelayCommand(ExecuteCreateAccountCommand);
             VerifyEmailCommand = new RelayCommand(ExecuteVerifyEmailCommand);
             LoginPageCommand = new RelayCommand(ExecuteGoToLoginPage);
+            MainPageCommand = new RelayCommand(ExecuteGoToMainPage);
 
+        }
+
+        private async void ExecuteGoToMainPage()
+        {
+            var MainPageView = new MainPageView();
+            Application.Current.MainWindow.Content = MainPageView;
         }
 
         // Create Account Logic
         internal async Task CreateAccountAsync()
         {
+
             var newCustomer = new SharedModels.Customer(FirstName, LastName, UserName, Email, Password, PhoneNumber);
+            if (Password != ConfirmPassword)
+            {
+                StatusMessage = "passwords do not match.";
+                return;
+            }
+
             var response = await _httpClient.PostAsJsonAsync("initiate-registration", newCustomer);
-            MessageBox.Show($"Response: {response.StatusCode}, {await response.Content.ReadAsStringAsync()}");
+            StatusMessage = $"Response: {response.StatusCode}, {await response.Content.ReadAsStringAsync()}";
 
             if (response.IsSuccessStatusCode)
             {
-                MessageBox.Show("Verification email sent. Please check your email.");
-
+                StatusMessage = "Verification email sent. Please check your email.";
+                IsVerificationVisible = Visibility.Visible;
             }
             else
             {
-                MessageBox.Show("Error creating account.");
+                StatusMessage = "Error creating account.";
 
 
             }
@@ -144,11 +193,48 @@ namespace FakeFlightBookingApp.ViewModel
 
             if (response.IsSuccessStatusCode)
             {
-                MessageBox.Show("Email successfully verified, and account created.");
+                // Create a new LoginRequest object
+                var loginRequest = new FakeFlightBookingAPI.Models.LoginRequest
+                {
+                    UserName = UserName,
+                    Password = Password
+                };
+
+                StatusMessage = "Email successfully verified, and account created. Taking you to homepage";
+
+                var loginResponse = await _httpClient.PostAsJsonAsync("CustomerLogin", loginRequest);
+                var responseContent = await response.Content.ReadAsStringAsync();
+
+                if (loginResponse.IsSuccessStatusCode)
+                {
+                    var customer = await loginResponse.Content.ReadFromJsonAsync<CustomerDTO>();
+
+                    if (customer != null)
+                    {
+                        // Store user data in application properties
+                        Application.Current.Properties["UserId"] = customer.Id;
+                        Application.Current.Properties["UserName"] = customer.UserName;
+                        Application.Current.Properties["FirstName"] = customer.FirstName;
+                        Application.Current.Properties["LastName"] = customer.LastName;
+                        Application.Current.Properties["Email"] = customer.Email;
+
+                        GoToMainPage();
+
+
+                    }
+                    else
+                    {
+                        StatusMessage = "Error: Invalid response data.";
+                    }
+                }
+                else
+                {
+                    return;
+                }
             }
             else
             {
-                MessageBox.Show("Invalid verification code.");
+                StatusMessage = "Invalid verification code.";
             }
         }
 
@@ -158,6 +244,11 @@ namespace FakeFlightBookingApp.ViewModel
         protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+
+        public void GoToMainPage()
+        {
+            _navigationService.NavigateToMainPage();
         }
     }
 }

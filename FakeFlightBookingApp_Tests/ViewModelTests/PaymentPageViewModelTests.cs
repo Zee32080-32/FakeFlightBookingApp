@@ -46,11 +46,29 @@ namespace FakeFlightBookingApp_Tests.ViewModelTests
 
             _viewModel = new PaymentPageViewModel(flightOffer, _httpClient);
 
-            _showMessageMock = new Mock<Action<string>>();
-            _viewModel.ShowMessage += _showMessageMock.Object;
+            //_showMessageMock = new Mock<Action<string>>();
+            //_viewModel.StatusMessage += _showMessageMock.Object;
 
             _navigateToMainPageMock = new Mock<Action>();
             _viewModel.NavigateToMainPage += _navigateToMainPageMock.Object;
+
+            if (Application.Current == null)
+            {
+                try
+                {
+                    new Application();
+                }
+                catch (InvalidOperationException)
+                {
+                    // Application already exists, ignore
+                }
+            }
+
+            Application.Current.Properties["UserId"] = null;
+            Application.Current.Properties["UserName"] = null;
+            Application.Current.Properties["FirstName"] = null;
+            Application.Current.Properties["LastName"] = null;
+            Application.Current.Properties["Email"] = null;
 
             _navigateToCheckoutUrlMock = new Mock<EventHandler<string>>();
 
@@ -86,11 +104,6 @@ namespace FakeFlightBookingApp_Tests.ViewModelTests
         public async Task HandlePaymentSuccess_ShouldCallNavigateToMainPage_WhenBookingIsSuccessful()
         {
             // Arrange
-            if (Application.Current == null)
-            {
-                new Application();
-            }
-
             Application.Current.Properties["UserId"] = 1;
 
             var mockResponse = new HttpResponseMessage(System.Net.HttpStatusCode.OK)
@@ -112,12 +125,14 @@ namespace FakeFlightBookingApp_Tests.ViewModelTests
             // Act
             await _viewModel.HandlePaymentSuccess();
 
-            // Assert: Verify the success message was shown
-            _showMessageMock.Verify(m => m(It.Is<string>(s => s.Contains("Booking successful!"))), Times.Once);
+            // Assert: Ensure the success message is shown
+            Assert.Equal("Booking successful! Taking you to homepage", _viewModel.StatusMessage);
+            //_showMessageMock.Verify(m => m(It.Is<string>(s => s.Contains("Booking successful!"))), Times.Once);
 
-            // Assert: Verify that NavigateToMainPage was called after booking success
+            // Assert: Ensure NavigateToMainPage is called after booking success
             _navigateToMainPageMock.Verify(m => m(), Times.Once);
         }
+
     }
 }
 

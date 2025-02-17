@@ -12,10 +12,12 @@ using System.Net.Http.Json;
 using System.Windows.Navigation;
 using CommunityToolkit.Mvvm.Input;
 using FakeFlightBookingApp.View;
+using System.ComponentModel;
+using System.Runtime.CompilerServices;
 
 namespace FakeFlightBookingApp.ViewModel
 {
-    public class LoginViewModel
+    public class LoginViewModel : INotifyPropertyChanged
     {
         private readonly HttpClient _httpClient;
 
@@ -23,13 +25,26 @@ namespace FakeFlightBookingApp.ViewModel
         public string UserName { get; set; }
         public string Password { get; set; }
 
+        private string _statusMessage;
 
- 
+        public event PropertyChangedEventHandler? PropertyChanged;
+
+        public string StatusMessage
+        {
+            get => _statusMessage;
+            set
+            {
+                _statusMessage = value;
+                OnPropertyChanged();
+            }
+        }
+
 
         // Command for SignIn Button
         public ICommand SignInCommand { get; }
         public ICommand CreateAccountCommand { get; }
         public ICommand ResetPasswordCommand { get; }
+        public ICommand MainPageCommand { get; }
 
 
         public LoginViewModel(HttpClient httpClient)
@@ -38,8 +53,17 @@ namespace FakeFlightBookingApp.ViewModel
             SignInCommand = new RelayCommand(ExecuteSignInCommand);
             CreateAccountCommand = new RelayCommand(ExecuteCreateAccountCommand);
             ResetPasswordCommand = new RelayCommand(ExecuteResetPasswordCommand);
+            MainPageCommand = new RelayCommand(ExecuteGoToMainPage);
 
         }
+
+        private async void ExecuteGoToMainPage()
+        {
+            var MainPageView = new MainPageView();
+            Application.Current.MainWindow.Content = MainPageView;
+        }
+
+
 
         private async void ExecuteCreateAccountCommand()
         {
@@ -67,9 +91,6 @@ namespace FakeFlightBookingApp.ViewModel
 
             if (response.IsSuccessStatusCode)
             {
-                // Show success message
-                MessageBox.Show("Login successful.");
-
                 // Navigate to the main page (ensure this line is executed after successful login)
                 Application.Current.Dispatcher.Invoke(() =>
                 {
@@ -84,7 +105,7 @@ namespace FakeFlightBookingApp.ViewModel
             }
             else
             {
-                MessageBox.Show("Invalid username or password.");
+                StatusMessage = "Invalid username or password.";
             }
         }
 
@@ -113,7 +134,7 @@ namespace FakeFlightBookingApp.ViewModel
                     }
                     else
                     {
-                        MessageBox.Show("Error: Invalid response data.");
+                        StatusMessage = "Error: Invalid response data.";
                         return response;
                     }
                 }
@@ -124,9 +145,14 @@ namespace FakeFlightBookingApp.ViewModel
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"An error occurred: {ex.Message}");
+                StatusMessage  = $"An error occurred: {ex.Message}";
                 throw;
             }
         }
+        protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+
     }
 }

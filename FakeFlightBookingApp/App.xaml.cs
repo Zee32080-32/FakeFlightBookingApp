@@ -1,4 +1,5 @@
 ﻿using FakeFlightBookingAPI.Services;
+using FakeFlightBookingApp.Model;
 using FakeFlightBookingApp.ViewModel;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -31,6 +32,7 @@ namespace FakeFlightBookingApp
             serviceCollection.AddHttpClient<FlightOffersSearchService>();
             serviceCollection.AddHttpClient<AirportLookupService>();
             serviceCollection.Configure<AmadeusOptions>(Configuration.GetSection("Amadeus"));
+            serviceCollection.AddSingleton<INavigationService, NavigationService>();
 
             serviceCollection.AddTransient<FlightTicketPageViewModel>();
 

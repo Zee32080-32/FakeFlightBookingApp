@@ -34,7 +34,7 @@ namespace FakeFlightBookingApp.View
             _searchQuery = searchQuery;
 
             // Set the DataContext for binding
-            //this.DataContext = new FlightTicketPageViewModel(flightOffers, searchQuery);
+            this.DataContext = new FlightTicketPageViewModel(flightOffers, searchQuery);
         }
 
         private void Page_Loaded(object sender, RoutedEventArgs e)
@@ -43,7 +43,6 @@ namespace FakeFlightBookingApp.View
 
             if (viewModel != null)
             {
-                MessageBox.Show("Page loaded");
                 viewModel.ShowMessage += ViewModel_ShowMessage;
                 viewModel.NavigateToPaymentPage += ViewModel_NavigateToPaymentPage;
 

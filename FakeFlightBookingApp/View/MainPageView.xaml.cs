@@ -9,6 +9,7 @@ using System.Net.Http.Json;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Input;
 using System.Windows.Navigation;
 
 namespace FakeFlightBookingApp.View
@@ -47,5 +48,24 @@ namespace FakeFlightBookingApp.View
             navigationWindow?.Navigate(page);
         }
 
+        private void TravelImage_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            if (DataContext is MainPageViewModel mainPageViewModel)
+            {
+                mainPageViewModel.TravelGuideCommand.Execute(null);
+            }
+        }
+
+        private void ProfileImage_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            if (DataContext is MainPageViewModel mainPageViewModel)
+            {
+                mainPageViewModel.ViewProfileCommand.Execute(null);
+            }
+            else
+            {
+                MessageBox.Show("Data context is null");
+            }
+        }
     }
 }

@@ -27,6 +27,25 @@ namespace FakeFlightBookingApp_Tests.ViewModelTests
                 BaseAddress = new Uri("https://localhost:7186/api/users/")
             };
 
+            if (Application.Current == null)
+            {
+                try
+                {
+                    new Application();
+                }
+                catch (InvalidOperationException)
+                {
+                    // Application already exists, ignore
+                }
+            }
+
+            Application.Current.Properties["UserId"] = null;
+            Application.Current.Properties["UserName"] = null;
+            Application.Current.Properties["FirstName"] = null;
+            Application.Current.Properties["LastName"] = null;
+            Application.Current.Properties["Email"] = null;
+
+
             _loginViewModel = new LoginViewModel(_httpClient);
         }
 
@@ -34,10 +53,6 @@ namespace FakeFlightBookingApp_Tests.ViewModelTests
         public async Task ExecuteSignInCommand_ShouldShowSuccessMessage_WhenLoginIsSuccessful()
         {
             // Arrange
-            if (Application.Current == null)
-            {
-                new Application(); 
-            }
 
             var mockResponse = new HttpResponseMessage(HttpStatusCode.OK)
             {
@@ -72,11 +87,11 @@ namespace FakeFlightBookingApp_Tests.ViewModelTests
                 ItExpr.IsAny<CancellationToken>()
             );
 
-            Assert.Equal(1, Application.Current.Properties["UserId"]);
-            Assert.Equal("johndoe", Application.Current.Properties["UserName"]);
-            Assert.Equal("John", Application.Current.Properties["FirstName"]);
-            Assert.Equal("Doe", Application.Current.Properties["LastName"]);
-            Assert.Equal("john.doe@example.com", Application.Current.Properties["Email"]);
+            Assert.Equal(Application.Current.Properties["UserId"], 1);
+            Assert.Equal(Application.Current.Properties["UserName"], "johndoe");
+            Assert.Equal(Application.Current.Properties["FirstName"], "John");
+            Assert.Equal(Application.Current.Properties["LastName"], "Doe");
+            Assert.Equal(Application.Current.Properties["Email"], "john.doe@example.com");
         }
 
 

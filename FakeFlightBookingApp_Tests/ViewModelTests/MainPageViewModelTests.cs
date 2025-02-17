@@ -11,6 +11,7 @@ using System.Linq;
 using System.Net;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Media.Media3D;
 
 namespace FakeFlightBookingApp_Tests.ViewModelTests
@@ -30,7 +31,6 @@ namespace FakeFlightBookingApp_Tests.ViewModelTests
                 BaseAddress = new System.Uri("https://localhost:7186/api/users/")
             };
 
-            // Initialize the ViewModel with the mocked HttpClient
             _viewModel = new MainPageViewModel(_httpClient);
         }
 
@@ -41,38 +41,38 @@ namespace FakeFlightBookingApp_Tests.ViewModelTests
             var mockFlightOfferResponse = new FlightOffersResponse
             {
                 Data = new List<FlightOffer>
-        {
-            new FlightOffer
-            {
-                Itineraries = new List<Itinerary>
                 {
-                    new Itinerary
+                    new FlightOffer
                     {
-                        Segments = new List<Segment>
+                        Itineraries = new List<Itinerary>
                         {
-                            new Segment
+                            new Itinerary
                             {
-                                Departure = new Departure
+                                Segments = new List<Segment>
                                 {
-                                    IataCode = "JFK",
-                                    At = DateTime.Now.AddHours(2)
-                                },
-                                Arrival = new Arrival
-                                {
-                                    IataCode = "LAX",
-                                    At = DateTime.Now.AddHours(5)
-                                },
-                                Number = "AA123"
+                                    new Segment
+                                    {
+                                        Departure = new Departure
+                                        {
+                                            IataCode = "JFK",
+                                            At = DateTime.Now.AddHours(2)
+                                        },
+                                        Arrival = new Arrival
+                                        {
+                                            IataCode = "LAX",
+                                            At = DateTime.Now.AddHours(5)
+                                        },
+                                        Number = "AA123"
+                                    }
+                                }
                             }
+                        },
+                        Price = new Price
+                        {
+                            Total = "300.00"
                         }
                     }
-                },
-                Price = new Price
-                {
-                    Total = "300.00"
                 }
-            }
-        }
             };
 
             // Convert mock response to JSON and set it as the response content

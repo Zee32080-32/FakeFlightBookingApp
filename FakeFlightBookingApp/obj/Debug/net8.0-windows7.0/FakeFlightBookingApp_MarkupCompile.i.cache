@@ -10,11 +10,11 @@ none
 false
 TRACE;DEBUG;NET;NET8_0;NETCOREAPP
 D:\Zeeshan\Documents\FakeFligthBoolingApp_Parent\FakeFlightBookingApp\App.xaml
-81321483060
+121586536070
 3-1172400671
-251216635686
+30420150987
 373-544589385
-MainWindow.xaml;View\CreateAccountView.xaml;View\FlightTicketPage.xaml;View\ForgotPassword.xaml;View\LoginView.xaml;View\MainPageView.xaml;View\PaymentPage.xaml;View\ProfilePageView.xaml;
+MainWindow.xaml;Resources\Styles.xaml;View\AboutUs.xaml;View\CreateAccountView.xaml;View\FlightDetailsWindow.xaml;View\FlightTicketPage.xaml;View\ForgotPassword.xaml;View\LoginView.xaml;View\MainPageView.xaml;View\PaymentPage.xaml;View\PrivacyPolicy.xaml;View\ProfilePageView.xaml;
 
 True
 

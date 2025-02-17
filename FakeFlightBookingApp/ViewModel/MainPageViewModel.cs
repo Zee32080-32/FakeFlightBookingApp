@@ -8,6 +8,7 @@ using SharedModels;
 using System;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Net.Http;
 using System.Net.Http.Json;
 using System.Runtime.CompilerServices;
@@ -115,18 +116,80 @@ namespace FakeFlightBookingApp.ViewModel
             }
         }
 
+        private string _randomTravelImage;
+        public string RandomTravelImage
+        {
+            get { return _randomTravelImage; }
+            set
+            {
+                _randomTravelImage = value;
+                OnPropertyChanged(nameof(RandomTravelImage));
+            }
+        }
+
+        private string _userProfileImage;
+        public string UserProfileImage
+        {
+            get => _userProfileImage;
+            set
+            {
+                _userProfileImage = value;
+                OnPropertyChanged(nameof(UserProfileImage));
+            }
+        }
+
+        private string _username;
+        public string Username
+        {
+            get => _username;
+            set
+            {
+                _username = value;
+                OnPropertyChanged(nameof(Username));
+            }
+        }
+
         public ObservableCollection<FlightOfferDTO> FlightOffersCollection { get; set; } = new();
+
+        private readonly List<string> _travelImages = new List<string>
+        {
+            "pack://application:,,,/FakeFlightBookingApp;component/Pics/Colombia/Cartegena.jpg",
+            "pack://application:,,,/FakeFlightBookingApp;component/Pics/Colombia/Food.jpg",
+
+            "pack://application:,,,/FakeFlightBookingApp;component/Pics/Mexico/Aztec.png",
+            "pack://application:,,,/FakeFlightBookingApp;component/Pics/Mexico/StreetFood.jpg",
+            
+            "pack://application:,,,/FakeFlightBookingApp;component/Pics/Pakistan/Building.jpg",
+            "pack://application:,,,/FakeFlightBookingApp;component/Pics/Pakistan/NationalMonument.jpg",
+            "pack://application:,,,/FakeFlightBookingApp;component/Pics/Pakistan/River.jpg",
+            "pack://application:,,,/FakeFlightBookingApp;component/Pics/Pakistan/SaltMine.jpg",
+            
+            "pack://application:,,,/FakeFlightBookingApp;component/Pics/Romania/Building.jpg",
+            "pack://application:,,,/FakeFlightBookingApp;component/Pics/Romania/Waterfall.jpg",
+
+            
+            "pack://application:,,,/FakeFlightBookingApp;component/Pics/Senegal/PinkLake.jpg",
+            "pack://application:,,,/FakeFlightBookingApp;component/Pics/Senegal/Touba.jpg"
+            
+        };
 
         // Command bindings
         public ICommand SearchFlightsCommand { get; }
         public ICommand BuyTicketCommand { get; }
         public ICommand LoginSignCommand { get; }
         public ICommand ViewProfileCommand { get; }
+        public ICommand TravelGuideCommand { get; }
+        public ICommand AboutUsCommand { get; }
+        public ICommand PrivacyPolicyCommand { get; }
+
 
 
         public MainPageViewModel(HttpClient httpClient)
         {
-            int userId = GetAuthenticatedUserId();
+            SetRandomTravelImage();
+
+            int userId = GetAuthenticatedProperty<int>("UserId");
+
             if (userId == -1)
             {
                 IsLoggedIn = false;
@@ -135,16 +198,95 @@ namespace FakeFlightBookingApp.ViewModel
             else 
             {
                 IsLoggedIn = true;
+                Username = GetAuthenticatedProperty<string>("UserName");
+                UserProfileImage = "pack://application:,,,/FakeFlightBookingApp;component/Pics/DefaultUserLogo.jpg";
+
             }
             _httpClient = httpClient;
 
             SearchFlightsCommand = new RelayCommand(async () => await ExecuteSearchFlightsCommand());
-            LoginSignCommand = new RelayCommand(ExecuteGoToLoginPage);
             ViewProfileCommand = new RelayCommand(ExecuteGoToProfilePage);
+            LoginSignCommand = new RelayCommand(ExecuteGoToLoginPage);
+            AboutUsCommand = new RelayCommand(ExecuteGoToAboutUsPage);
+            PrivacyPolicyCommand = new RelayCommand(ExecuteGoToPrivacyPolicyPage);
+
 
             // Make sure BuyTicketCommand is a RelayCommand<FlightOfferDTO> (not just RelayCommand)
             BuyTicketCommand = new CommunityToolkit.Mvvm.Input.RelayCommand<FlightOfferDTO>(BuyTicket);
+
+
+            // Command to open travel guide
+            TravelGuideCommand = new RelayCommand(ExecuteTravelGuide);
+            
         }
+
+
+        private void SetRandomTravelImage()
+        {
+            if (_travelImages.Count > 0)
+            {
+                int index = new Random().Next(_travelImages.Count);
+                RandomTravelImage = _travelImages[index];
+
+            }
+            else
+            {
+                RandomTravelImage = "pack://application:,,,/FakeFlightBookingApp;component/Pics/Pakistan/Building.jpg";
+
+            }
+        }
+
+
+        private void ExecuteTravelGuide()
+        {
+            try
+            {
+                if (string.IsNullOrEmpty(RandomTravelImage))
+                {
+                    Debug.WriteLine("RandomTravelImage is empty.");
+                    return;
+                }
+
+                // Extract the country/folder name from the image path
+                string[] parts = RandomTravelImage.Split('/');
+                if (parts.Length < 6) // Ensure the path has enough parts
+                {
+                    Debug.WriteLine("Invalid image path: " + RandomTravelImage);
+                    return;
+                }
+
+                string country = parts[parts.Length - 2]; // Second last part is the country folder
+
+                // Define the mapping of countries to Lonely Planet URLs
+                var travelGuideUrls = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase)
+                {
+                    { "Pakistan", "https://www.lonelyplanet.com/pakistan" },
+                    { "Romania", "https://www.lonelyplanet.com/romania" },
+                    { "Senegal", "https://www.lonelyplanet.com/senegal" },
+                    { "Mexico", "https://www.lonelyplanet.com/mexico" },
+                    { "Colombia", "https://www.lonelyplanet.com/colombia" }
+                };
+
+                if (travelGuideUrls.TryGetValue(country, out string url))
+                {
+                    ProcessStartInfo psi = new ProcessStartInfo
+                    {
+                        FileName = url,
+                        UseShellExecute = true
+                    };
+                    Process.Start(psi);
+                }
+                else
+                {
+                    Debug.WriteLine("No travel guide found for: " + country);
+                }
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine("Error opening travel guide: " + ex.Message);
+            }
+        }
+
 
         private async void ExecuteGoToLoginPage()
         {
@@ -153,7 +295,20 @@ namespace FakeFlightBookingApp.ViewModel
 
         }
 
-        private async void ExecuteGoToProfilePage()
+        private async void ExecuteGoToAboutUsPage()
+        {
+            var aboutUs = new AboutUs();
+            Application.Current.MainWindow.Content = aboutUs;
+
+        }
+
+        private async void ExecuteGoToPrivacyPolicyPage()
+        {
+            var privacyPolicy = new PrivacyPolicy();
+            Application.Current.MainWindow.Content = privacyPolicy;
+
+        }
+        public async void ExecuteGoToProfilePage()
         {
             var ProfilePage = new ProfilePageView();
             Application.Current.MainWindow.Content = ProfilePage;
@@ -249,20 +404,28 @@ namespace FakeFlightBookingApp.ViewModel
             NavigateToPage?.Invoke(new PaymentPage(selectedFlight));
 
         }
-
-        private int GetAuthenticatedUserId()
+        private T GetAuthenticatedProperty<T>(string propertyKey)
         {
-            // Check if UserId exists in Application.Current.Properties
-            if (Application.Current.Properties.Contains("UserId"))
+            if (Application.Current.Properties.Contains(propertyKey))
             {
-                return (int)Application.Current.Properties["UserId"];
+                return (T)Application.Current.Properties[propertyKey];
             }
             else
             {
-                //MessageBox.Show("User not authenticated. Please log in.");
-                return -1; // Return an invalid value or handle appropriately
+                // Return a custom default value based on the type
+                if (typeof(T) == typeof(int))
+                {
+                    return (T)(object)-1;  // Return 0 for int
+                }
+                else if (typeof(T) == typeof(string))
+                {
+                    return (T)(object)"";  // Return an empty string for string
+                }
+                else
+                {
+                    return default(T);  // Return the default value for other types
+                }
             }
-
         }
 
         // INotifyPropertyChanged Implementation

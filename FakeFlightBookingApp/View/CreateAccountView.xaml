@@ -6,19 +6,20 @@
       xmlns:local="clr-namespace:FakeFlightBookingApp.View"
       xmlns:vm="clr-namespace:FakeFlightBookingApp.ViewModel"
       mc:Ignorable="d"
-      d:DesignHeight="450" d:DesignWidth="950"
+      d:DesignHeight="600" d:DesignWidth="950"
       Loaded="Page_Loaded"
+      Style="{StaticResource PageBackgroundStyle}" 
       Title="CreateAccountView">
 
-    <Border BorderBrush="Gray" BorderThickness="1" Background="White" Padding="20" CornerRadius="10">
-        <Grid>
+
+
+        <Grid Margin="10">
             <!-- Define the grid structure -->
             <Grid.RowDefinitions>
-                <RowDefinition Height="Auto" />
                 <!-- Title -->
-                <RowDefinition Height="20" />
+                <RowDefinition Height="Auto"/>
                 <!-- Spacer -->
-                <RowDefinition Height="Auto" />
+                <RowDefinition Height="20" />
                 <!-- Form Rows -->
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="Auto" />
@@ -26,91 +27,167 @@
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="Auto" />
-                <RowDefinition Height="20" />
-                <!-- Spacer -->
                 <RowDefinition Height="Auto" />
-                <!-- Button -->
+                <!-- Spacer -->
+                <RowDefinition Height="20" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
 
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="1*" />
                 <!-- Labels -->
-                <ColumnDefinition Width="2*" />
+                <ColumnDefinition Width="1*" />
                 <!-- Inputs -->
+                <ColumnDefinition Width="2*" />
             </Grid.ColumnDefinitions>
 
             <!-- Title -->
-            <TextBlock Text="Create Account" FontSize="24" FontWeight="Bold" HorizontalAlignment="Center" Grid.Row="0" Grid.ColumnSpan="2" />
+            <TextBlock Text="Create Account" FontSize="24" FontWeight="Bold" HorizontalAlignment="Center" Grid.Row="0" Grid.ColumnSpan="2" Foreground="White" />
 
-            <!-- First Name -->
-            <TextBlock Text="First Name:" VerticalAlignment="Center" Margin="5" Grid.Row="2" Grid.Column="0" />
-            <TextBox Text="{Binding FirstName}" Margin="5" Grid.Row="2" Grid.Column="1" />
+            <Button Content="Go back to Main Page" 
+                HorizontalAlignment="Left" 
+                VerticalAlignment="Center" Style="{StaticResource RoundedButtonStyle}" 
+                Margin="10" Command="{Binding MainPageCommand}"
+                Grid.Row="0"
+                Grid.Column="0"
+            />
+
+
+        <!-- First Name -->
+            <TextBlock Text="First Name:" VerticalAlignment="Center" Margin="5" Grid.Row="2" Grid.Column="0" Foreground="White" />
+            <TextBox Text="{Binding FirstName}" Margin="5" Style="{StaticResource RoundedTextBoxStyle}" Width="350" VerticalAlignment="Center" Grid.Row="2" Grid.Column="1" Foreground="Black" HorizontalAlignment="Left"/>
 
             <!-- Last Name -->
-            <TextBlock Text="Last Name:" VerticalAlignment="Center" Margin="5" Grid.Row="3" Grid.Column="0" />
-            <TextBox Text="{Binding LastName}" Margin="5" Grid.Row="3" Grid.Column="1" />
+            <TextBlock Text="Last Name:" VerticalAlignment="Center" Margin="5" Grid.Row="3" Grid.Column="0" Foreground="White"/>
+            <TextBox Text="{Binding LastName}" Margin="5" Grid.Row="3" Grid.Column="1"  Width="350" HorizontalAlignment="Left" VerticalAlignment="Center" Style="{StaticResource RoundedTextBoxStyle}"/>
 
             <!-- Username -->
-            <TextBlock Text="Username:" VerticalAlignment="Center" Margin="5" Grid.Row="4" Grid.Column="0" />
-            <TextBox Text="{Binding UserName}" Margin="5" Grid.Row="4" Grid.Column="1" />
+            <TextBlock Text="Username:" VerticalAlignment="Center" Margin="5" Grid.Row="4" Grid.Column="0" Foreground="White"/>
+            <TextBox Text="{Binding UserName}" Margin="5" Grid.Row="4" Grid.Column="1" Width="350" HorizontalAlignment="Left" VerticalAlignment="Center" Style="{StaticResource RoundedTextBoxStyle}"/>
 
             <!-- Email -->
-            <TextBlock Text="Email:" VerticalAlignment="Center" Margin="5" Grid.Row="5" Grid.Column="0" />
-            <TextBox Text="{Binding Email}" Margin="5" Grid.Row="5" Grid.Column="1" />
+            <TextBlock Text="Email:" VerticalAlignment="Center" Margin="5" Grid.Row="5" Grid.Column="0" Foreground="White"/>
+            <TextBox Text="{Binding Email}" Margin="5" Grid.Row="5" Grid.Column="1"  Width="350" HorizontalAlignment="Left" VerticalAlignment="Center" Style="{StaticResource RoundedTextBoxStyle}"/>
 
             <!-- Phone Number -->
-            <TextBlock Text="Phone Number:" VerticalAlignment="Center" Margin="5" Grid.Row="6" Grid.Column="0" />
-            <TextBox Text="{Binding PhoneNumber}" Margin="5" Grid.Row="6" Grid.Column="1" />
+            <TextBlock Text="Phone Number:" VerticalAlignment="Center" Margin="5" Grid.Row="6" Grid.Column="0" Foreground="White" />
+            <TextBox Text="{Binding PhoneNumber}" Margin="5" Grid.Row="6" Grid.Column="1"  Width="350" HorizontalAlignment="Left" VerticalAlignment="Center" Style="{StaticResource RoundedTextBoxStyle}"/>
 
             <!-- Password -->
-            <TextBlock Text="Password:" VerticalAlignment="Center" Margin="5" Grid.Row="7" Grid.Column="0" />
-            <PasswordBox Margin="5" Grid.Row="7" Grid.Column="1" PasswordChanged="PasswordBox_PasswordChanged" />
+            <TextBlock Text="Password:" VerticalAlignment="Center" Margin="5" Grid.Row="7" Grid.Column="0" Foreground="White" />
+            <PasswordBox Margin="5" Grid.Row="7" Grid.Column="1" PasswordChanged="PasswordBox_PasswordChanged"  Width="350" HorizontalAlignment="Left" VerticalAlignment="Center" Style="{StaticResource RoundedPasswordBoxStyle}" 
+            />
 
             <!-- Confirm Password -->
-            <TextBlock Text="Confirm Password:" VerticalAlignment="Center" Margin="5" Grid.Row="8" Grid.Column="0" />
-            <PasswordBox Margin="5" Grid.Row="8" Grid.Column="1" PasswordChanged="ConfirmPasswordBox_PasswordChanged" />
+            <TextBlock Text="Confirm Password:" VerticalAlignment="Center" Margin="5" Grid.Row="8" Grid.Column="0" Foreground="White" />
+            <PasswordBox Margin="5" Grid.Row="8" Grid.Column="1" PasswordChanged="ConfirmPasswordBox_PasswordChanged"  Width="350" HorizontalAlignment="Left" VerticalAlignment="Center" Style="{StaticResource RoundedPasswordBoxStyle}" />
 
+            <!-- Grid for buttons  -->
+            <Grid Grid.Row="10" Grid.ColumnSpan="2" Margin="0,10,0,0" HorizontalAlignment="Center" VerticalAlignment="Bottom">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <!-- Empty space for proper spacing -->
+                    <ColumnDefinition Width="Auto" />
+                    <!-- Create Account button -->
+                    <ColumnDefinition Width="50"/>
+                    <!-- Spacer column -->
+                    <ColumnDefinition Width="Auto" />
+                    <!-- Sign In button -->
+                    <ColumnDefinition Width="*" />
+                    <!-- Empty space for proper spacing -->
+                </Grid.ColumnDefinitions>
 
-            <!-- Create Account Button -->
-            <Button Content="Create Account"
+                <!-- Create Account Button -->
+                <Button Content="Create Account"
                 Command="{Binding CreateAccountCommand}"
+                Style="{StaticResource RoundedButtonStyle}"
+                Width="180"
+                Grid.Column="1"/>
+
+                <!-- Already have an account? Sign in Button -->
+                <Button Content="Already have an account? Sign in"
+                Command="{Binding LoginPageCommand}"
+                Style="{StaticResource RoundedButtonStyle}"
+                Width="220"
+                Grid.Column="3"/>
+
+    
+        </Grid>
+
+        <Grid Grid.Row="11" Grid.ColumnSpan="2" Margin="0,10,0,0" VerticalAlignment="Bottom" HorizontalAlignment="Center">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <!-- Status Message Row -->
+                <RowDefinition Height="Auto"/>
+                <!-- Verification Elements Row -->
+            </Grid.RowDefinitions>
+
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <!-- Empty space for alignment -->
+                <ColumnDefinition Width="Auto" />
+                <!-- Label -->
+                <ColumnDefinition Width="10" />
+                <!-- Spacer -->
+                <ColumnDefinition Width="Auto" />
+                <!-- TextBox -->
+                <ColumnDefinition Width="10" />
+                <!-- Spacer -->
+                <ColumnDefinition Width="Auto" />
+                <!-- Verify Email Button -->
+                <ColumnDefinition Width="*" />
+                <!-- Empty space for alignment -->
+            </Grid.ColumnDefinitions>
+
+            <!-- Status Label  -->
+            <Label x:Name="StatusLabel"
+                Content="{Binding StatusMessage}"
+                Foreground="White"
+                FontSize="14"
                 HorizontalAlignment="Center"
-                Padding="10"
-                Grid.Row="10"
-                Grid.ColumnSpan="2" 
+                VerticalAlignment="Center"
+                Grid.Row="0"
+                Grid.ColumnSpan="8"
+                Margin="0,0,0,5"
+                
+            />
+
+            <!-- Verification Code Label -->
+            <Label x:Name="verificationCode_Label"
+                Content="Verification Code:"
+                Foreground="White"
+                VerticalAlignment="Center"
+                Grid.Row="1"
+                Grid.Column="1"
+                Margin="0,0,0,10" 
+                Visibility="{Binding IsVerificationVisible}"
+            />
+
+            <!-- Verification Code TextBox -->
+            <TextBox Style="{StaticResource RoundedTextBoxStyle}"
+                x:Name="verificationCode_TextBox"
+                Text="{Binding VerificationCode}"
+                Width="100"
+                Grid.Row="1"
+                Grid.Column="3"
+                Margin="0,0,0,10" 
+                Visibility="{Binding IsVerificationVisible}"
+
             />
 
             <!-- Verify Email Button -->
             <Button Content="Verify Email"
+                x:Name="verifyEmailButton"
                 Command="{Binding VerifyEmailCommand}"
-                HorizontalAlignment="Right"
-                Padding="10"
-                Width="100"
-                Grid.Row="10"
-                Grid.Column="1"
-                Margin="0,69,209,-69" 
-            />
-
-            <Button Content="Already have an account sign in"
-                Command="{Binding LoginPageCommand}"
-                HorizontalAlignment="Center"
-                Padding="10"
-                Grid.Row="10"
-                Grid.Column="2"
-                Margin="10"
-            />
-
-            <Label x:Name="verificationCode_Label" Content="Verification Code"  Grid.Row="10" HorizontalAlignment="Left" VerticalAlignment="Bottom" Grid.ColumnSpan="2" Margin="301,0,0,-68"  />
-           
-            <TextBox x:Name="verificationCode_TextBox"
-                 Text="{Binding VerificationCode}"
-                 Grid.Row="10"
-                 Width="100"
-                 Grid.Column="1"
-                 Margin="136,72,369,-72"
+                Style="{StaticResource RoundedButtonStyle}"
+                Width="120"
+                Grid.Row="1"
+                Grid.Column="5"
+                Margin="0,0,0,10" 
+                Visibility="{Binding IsVerificationVisible}"
             />
         </Grid>
-    </Border>
+    </Grid>
 </Page>
 
 

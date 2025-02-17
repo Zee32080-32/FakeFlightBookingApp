@@ -26,6 +26,18 @@ namespace FakeFlightBookingApp.ViewModel
         public ICommand MainPageCommand { get; }
 
 
+        private string _statusMessage;
+        public string StatusMessage
+        {
+            get => _statusMessage;
+            set
+            {
+                _statusMessage = value;
+                OnPropertyChanged();
+            }
+        }
+
+
         // Event to notify the view to show a message
         public event Action<string> ShowMessage;
         // Event to notify the view to navigate (no direct navigation code in ViewModel)
@@ -48,22 +60,56 @@ namespace FakeFlightBookingApp.ViewModel
 
         }
 
+
+
         private void ExecuteBuyTicketCommand(FlightOfferDTO selectedFlight)
         {
-            if (selectedFlight != null)
+            int userId = GetAuthenticatedProperty<int>("UserId");
+
+            if (selectedFlight != null && userId != -1)
             {
-                ShowMessage?.Invoke($"Buying ticket for flight {selectedFlight.FlightNumber}");
+                //ShowMessage?.Invoke($"Buying ticket for flight {selectedFlight.FlightNumber}");
 
                 // Trigger the event for the view to handle the navigation
                 NavigateToPaymentPage?.Invoke(selectedFlight);
             }
             else
             {
-                ShowMessage?.Invoke("Please select a flight to buy a ticket.");
+               StatusMessage =  "Please sign in";
             }
         }
 
+        private T GetAuthenticatedProperty<T>(string propertyKey)
+        {
+            // Check if the property exists in Application.Current.Properties
+            if (Application.Current.Properties.Contains(propertyKey))
+            {
+                return (T)Application.Current.Properties[propertyKey];
+            }
+            else
+            {
+                if (typeof(T) == typeof(int))
+                {
+                    return (T)(object)-1;  // Return 0 for int
+                }
+                else if (typeof(T) == typeof(string))
+                {
+                    return (T)(object)"";  // Return an empty string for string
+                }
+                else
+                {
+                    return default(T);  // Return the default value for other types
+                }
+            }
+        }
+
+        // INotifyPropertyChanged Implementation
         public event PropertyChangedEventHandler PropertyChanged;
+
+        protected void OnPropertyChanged([CallerMemberName] string propertyName = null)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
     }
 }
 

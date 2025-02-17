@@ -82,7 +82,7 @@ namespace FakeFlightBookingApp_Tests.ViewModelTests
             await _viewModel.SendResetCodeAsync();
 
             // Assert: Check if the ShowMessage event was triggered with the error message
-            Assert.Equal("Please enter your email address.", _viewModel.Message);
+            Assert.Equal("Please enter your email address.", _viewModel.StatusMessage);
         }
 
         [Fact]
@@ -115,7 +115,7 @@ namespace FakeFlightBookingApp_Tests.ViewModelTests
             await _viewModel.VerifyCodeANDsaveNewPasswordAsync();
 
             // Assert: Check if the ShowMessage event was triggered
-            Assert.Contains("Password reset successfully.", _viewModel.Message);
+            Assert.Contains("Password reset successfully.", _viewModel.StatusMessage);
 
             // Verify that SendAsync was called once with the correct parameters
             _mockHttpMessageHandler.Protected().Verify
@@ -143,7 +143,7 @@ namespace FakeFlightBookingApp_Tests.ViewModelTests
             await _viewModel.VerifyCodeANDsaveNewPasswordAsync();
 
             // Assert: Check if the ShowMessage event was triggered with the error message
-            Assert.Contains("New passwords do not match.", _viewModel.Message);
+            Assert.Contains("New passwords do not match.", _viewModel.StatusMessage);
         }
 
         [Fact]
@@ -158,7 +158,7 @@ namespace FakeFlightBookingApp_Tests.ViewModelTests
             await _viewModel.VerifyCodeANDsaveNewPasswordAsync();
 
             // Assert: Check if the ShowMessage event was triggered with the error message
-            Assert.Equal("Please fill in all fields", _viewModel.Message);
+            Assert.Equal("Please fill in all fields", _viewModel.StatusMessage);
         }
     }
 }

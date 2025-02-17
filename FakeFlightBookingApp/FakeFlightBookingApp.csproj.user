@@ -7,7 +7,13 @@
     </ApplicationDefinition>
   </ItemGroup>
   <ItemGroup>
+    <Compile Update="View\AboutUs.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Update="View\CreateAccountView.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="View\FlightDetailsWindow.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Update="View\FlightTicketPage.xaml.cs">
@@ -25,6 +31,9 @@
     <Compile Update="View\PaymentPage.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Update="View\PrivacyPolicy.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Update="View\ProfilePageView.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -33,7 +42,16 @@
     <Page Update="MainWindow.xaml">
       <SubType>Designer</SubType>
     </Page>
+    <Page Update="Resources\Styles.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="View\AboutUs.xaml">
+      <SubType>Designer</SubType>
+    </Page>
     <Page Update="View\CreateAccountView.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="View\FlightDetailsWindow.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="View\FlightTicketPage.xaml">
@@ -49,6 +67,9 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Update="View\PaymentPage.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="View\PrivacyPolicy.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="View\ProfilePageView.xaml">

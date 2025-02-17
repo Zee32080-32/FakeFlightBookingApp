@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("FakeFlightBookingAPI")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+a1e854fbf7249b0502fabbbeae468d88a3013dfe")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+17c7650508e5165bfed696ef59ebe6004f81a6ea")]
 [assembly: System.Reflection.AssemblyProductAttribute("FakeFlightBookingAPI")]
 [assembly: System.Reflection.AssemblyTitleAttribute("FakeFlightBookingAPI")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

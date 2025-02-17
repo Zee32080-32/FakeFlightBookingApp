@@ -6,105 +6,195 @@
       xmlns:local="clr-namespace:FakeFlightBookingApp.View"
       xmlns:helpers="clr-namespace:FakeFlightBookingApp.Helpers"
       mc:Ignorable="d" 
-      d:DesignHeight ="450"  d:DesignWidth="1048"
+      d:DesignHeight ="700"  d:DesignWidth="950"
+      Style="{StaticResource PageBackgroundStyle}" 
+
       Loaded="Page_Loaded"
       Title="MainPageView">
-    
+
     <Page.Resources>
-        <helpers:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
+        <helpers:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
+
+        <Style x:Key="RoundedComboBoxStyle" TargetType="ComboBox">
+            <Setter Property="Background" Value="White"/>
+            <Setter Property="BorderBrush" Value="Gray"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="Padding" Value="5"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="ComboBox">
+                        <Grid>
+                            <!-- Outer Border -->
+                            <Border Name="Border" Background="{TemplateBinding Background}" 
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}"
+                            CornerRadius="10" Padding="2">
+                                <Grid>
+                                    <ToggleButton Name="ToggleButton"
+                                          Grid.Column="2"
+                                          Focusable="false"
+                                          IsChecked="{Binding IsDropDownOpen, RelativeSource={RelativeSource TemplatedParent}, Mode=TwoWay}"
+                                          ClickMode="Press"
+                                          Background="Transparent"
+                                          BorderThickness="0">
+                                        <ContentPresenter Name="ContentPresenter"
+                                                  Margin="4"
+                                                  VerticalAlignment="Center"
+                                                  HorizontalAlignment="Left"
+                                                  Content="{TemplateBinding SelectionBoxItem}" />
+                                    </ToggleButton>
+                                </Grid>
+                            </Border>
+
+                            <!-- Popup for Dropdown -->
+                            <Popup Name="Popup"
+                           Placement="Bottom"
+                           IsOpen="{TemplateBinding IsDropDownOpen}"
+                           AllowsTransparency="True"
+                           Focusable="False"
+                           PopupAnimation="Slide">
+                                <Border Background="White" CornerRadius="10" BorderBrush="Gray" BorderThickness="1">
+                                    <ScrollViewer Margin="4" BorderThickness="0">
+                                        <StackPanel IsItemsHost="True"/>
+                                    </ScrollViewer>
+                                </Border>
+                            </Popup>
+                        </Grid>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
     </Page.Resources>
 
-    <Grid Background="White">
+    <Grid Margin="10">
         <Grid.RowDefinitions>
-            <RowDefinition Height="1.0*"/>
-            <RowDefinition Height="2.0*"/>
-            <RowDefinition Height="1.0*"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
-
-        <!-- Top Row: Left-Aligned Label and Right-Aligned Button -->
-        <Grid Grid.Row="0" Background="White">
+        <!-- Top Row: Header and Login/Profile Buttons -->
+        <Grid Grid.Row="0" Margin="0,0,0,10">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*" />
-                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="Auto" />
             </Grid.ColumnDefinitions>
 
-            <!-- Search Label -->
-            <Label Content="Legit Flights" 
+            <Label Content="Fake Flights" 
                    HorizontalAlignment="Left" 
-                   VerticalAlignment="Center" 
-                   FontSize="20"
+                   VerticalAlignment="Top" 
+                   FontSize="24"
                    FontWeight="Bold"
-                   Margin="10"
+                   Foreground="White"
                    Grid.Column="0" />
 
-            <!-- Login/SignIn Button  -->
-            <Button Content="Login/SignIn" 
-            Command="{Binding LoginSignCommand}"                    
-            HorizontalAlignment="Right" 
-            VerticalAlignment="Center"
-            Margin="10"
-            Grid.Column="1"
-            Visibility="{Binding IsLoggedIn, Converter={StaticResource BooleanToVisibilityConverter}, ConverterParameter=invert}"/>
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                <!-- Login/SignIn Button  -->
+                <Button Content="Login/SignIn" 
+                        Command="{Binding LoginSignCommand}"                    
+                        Style="{StaticResource RoundedButtonStyle}"            
+                        Visibility="{Binding IsLoggedIn, Converter={StaticResource BooleanToVisibilityConverter}, ConverterParameter=invert}"/>
+            </StackPanel>
+            
+            <StackPanel Orientation="Vertical" HorizontalAlignment="Right">
+                <!-- View Profile -->
+                <Image Source="{Binding UserProfileImage}" 
+                    Width="75" Height="75" Margin="0,0,0,10" 
+                    Visibility="{Binding IsLoggedIn, Converter={StaticResource BooleanToVisibilityConverter}, FallbackValue=Collapsed}" 
+                    Stretch="UniformToFill" Cursor="Hand" MouseDown="ProfileImage_MouseDown">
+                    <Image.Clip>
+                        <EllipseGeometry Center="37.5,37.5" RadiusX="37.5" RadiusY="37.5" />
+                    </Image.Clip>
+                </Image>
 
-            <!-- View Profile Button -->
-            <Button Content="View Profile"
-            Command="{Binding ViewProfileCommand}"                    
-            HorizontalAlignment="Right"
-            VerticalAlignment="Center"
-            Margin="10"
-            Grid.Column="1"
-            Visibility="{Binding IsLoggedIn, Converter={StaticResource BooleanToVisibilityConverter}, FallbackValue=Collapsed}" />
 
+                <TextBlock Text="{Binding Username}" FontSize="14" Foreground="White" Visibility="{Binding IsLoggedIn, Converter={StaticResource BooleanToVisibilityConverter}, FallbackValue=Collapsed}" VerticalAlignment="Center" HorizontalAlignment="Center" />
+            </StackPanel>
         </Grid>
 
-        <StackPanel x:Name ="SearchForFlightStackPanel"  Grid.Row="1" Orientation="Horizontal" Margin="20">
+        <StackPanel Grid.Row="1" HorizontalAlignment="Center" Margin="5">
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="5">
+                <!-- Flight From -->
+                <StackPanel Orientation="Vertical" Margin="5">
+                    <Label Foreground="White" HorizontalAlignment="Center" FontSize="15">From (IATA Code)</Label>
+                    <TextBox Style="{StaticResource RoundedTextBoxStyle}" Text="{Binding FlightFrom}" Width="100"/>
+                </StackPanel>
 
-            <StackPanel Grid.Row="1" Orientation="Vertical" VerticalAlignment="Top">
-                <Label Margin="5" HorizontalAlignment="Center" FontSize="15">Flight From (enter IATA code)</Label>
-                <TextBox x:Name="FlightFrom_TextBox" Text="{Binding FlightFrom}" Width="100" Margin="5" />
+                <!-- Flight To -->
+                <StackPanel Orientation="Vertical" Margin="5">
+                    <Label Foreground="White" HorizontalAlignment="Center" FontSize="15">To (IATA Code)</Label>
+                    <TextBox Style="{StaticResource RoundedTextBoxStyle}" Text="{Binding FlightTo}" Width="100"/>
+                </StackPanel>
+
+                <!-- Departure Date -->
+                <StackPanel Orientation="Vertical" Margin="5">
+                    <Label Foreground="White" HorizontalAlignment="Center" FontSize="15">Departure</Label>
+                    <DatePicker SelectedDate="{Binding DepartureDate}" Width="120"/>
+                </StackPanel>
+
+                <!-- Return Date -->
+                <StackPanel Orientation="Vertical" Margin="5">
+                    <Label Foreground="White" HorizontalAlignment="Center" FontSize="15">Return</Label>
+                    <DatePicker SelectedDate="{Binding ReturnDate}" Width="120"/>
+                </StackPanel>
+
+                <!-- Number of Tickets -->
+                <StackPanel Orientation="Vertical" Margin="5">
+                    <Label Foreground="White" HorizontalAlignment="Center" FontSize="15">Tickets</Label>
+                    <TextBox Style="{StaticResource RoundedTextBoxStyle}" Text="{Binding NumberOfTickets}" Width="50"/>
+                </StackPanel>
+
+                <!-- Travel Class -->
+                <StackPanel Orientation="Vertical" Margin="5">
+                    <Label Foreground="White" HorizontalAlignment="Center" FontSize="15">Class</Label>
+                    <ComboBox Style="{StaticResource RoundedComboBoxStyle}" SelectedItem="{Binding SelectedTravelClass}" Width="120">
+                        <ComboBoxItem Content="ECONOMY"/>
+                        <ComboBoxItem Content="BUSINESS"/>
+                        <ComboBoxItem Content="FIRST"/>
+                    </ComboBox>
+                </StackPanel>
+
+                <!-- Search Button -->
+                <Button Content="Search Flight"
+                Style="{StaticResource RoundedButtonStyle}"
+                Command="{Binding SearchFlightsCommand}"
+                Margin="10,20,0,0" 
+                FontSize="15" Height="43"/>
             </StackPanel>
 
-            <StackPanel Grid.Row="1" Orientation="Vertical" VerticalAlignment="Top">
-                <Label Margin="5" HorizontalAlignment="Center" FontSize="15">Flight To (enter IATA code)</Label>
-                <TextBox x:Name="FlightTo_TextBox" Text="{Binding FlightTo}" Width="100" Margin="5"/>
-            </StackPanel>
-            
-            <StackPanel Grid.Row="1" Orientation="Vertical" VerticalAlignment="Top">
-                <Label HorizontalAlignment="Center" Margin="5" FontSize="15">Leave Date</Label>
-                <DatePicker x:Name="DepartureDate_DatePicker" SelectedDate="{Binding DepartureDate}" VerticalAlignment="Center" Margin="5"/>
-            </StackPanel>
-
-            <StackPanel Grid.Row="1" Orientation="Vertical" VerticalAlignment="Top">
-                <Label HorizontalAlignment="Center" Margin="5" FontSize="15">Return Date</Label>
-                <DatePicker x:Name="ArrivalDate_DatePicker" SelectedDate="{Binding ReturnDate}" VerticalAlignment="Center" Visibility="Visible" Margin="5,0,0,0"/>
-            </StackPanel>
-
-            <StackPanel Grid.Row="1" Orientation="Vertical" VerticalAlignment="Top">
-                <Label HorizontalAlignment="Center" Margin="5" FontSize="15">Number of Tickets</Label>
-                <TextBox x:Name="NumberOfTicket_TextBox" Text ="{Binding NumberOfTickets}" Visibility="Visible" Margin="5" VerticalAlignment="Center" Width="50"/>
-            </StackPanel>
-            
-
-            <StackPanel Grid.Row="1" Orientation="Vertical" VerticalAlignment="Top">
-                <Label HorizontalAlignment="Center" Margin="5" FontSize="15">Class Type</Label>
-                <ComboBox x:Name="TravelClass_ComboBox" SelectedItem="{Binding SelectedTravelClass}" VerticalAlignment="Center" Margin="5" Width="100" FontSize="18">
-                    <ComboBoxItem Content="ECONOMY"/>
-                    <ComboBoxItem Content="BUSINESS"/>
-                    <ComboBoxItem Content="FIRST"/>
-                </ComboBox>            
-            </StackPanel>
-
-            <Button x:Name="SearchFlights_Button" Content="Search Flight" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="5,5,5,65" FontSize="15" Command="{Binding SearchFlightsCommand}" />
-
-            <!--
-                        <TextBlock x:Name="PriceTextBlock" FontWeight="Bold" FontSize="16" Background='AliceBlue' Width="100" />
-
-            -->
-            
+            <!-- Status Message -->
+            <Label Foreground="White" HorizontalAlignment="Left" FontSize="20" Margin="5,5,5,5"
+           x:Name="StatusLabel"  Content="{Binding StatusMessage}" />
         </StackPanel>
-        <DockPanel Grid.Row="1" LastChildFill="False" Margin="5">
-            <Label DockPanel.Dock="Bottom" x:Name="StatusLabel" Content="{Binding StatusMessage}" Grid.Row="1" />
-        </DockPanel>
+
+        <!--Travel Guide-->
+        <StackPanel Grid.Row="2" Margin="10" HorizontalAlignment="Center" VerticalAlignment="Top">
+            <Image x:Name="TravelImage" 
+                Source="{Binding RandomTravelImage}" 
+                Width="900" Height="400" 
+                Stretch="Uniform" 
+                Cursor="Hand"
+                MouseDown="TravelImage_MouseDown"
+            />
+        </StackPanel>
+        
+
+        <StackPanel Grid.Row="3" Margin="10" VerticalAlignment="Bottom">
+            <TextBlock Text="Fake Flights - The best place to book fake flights!" 
+               Foreground="White" FontSize="16" HorizontalAlignment="Center"/>
+
+            <!-- About us  -->
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="10">
+                <Button Content="About Us" 
+                Command="{Binding AboutUsCommand}" 
+                Style="{StaticResource RoundedButtonStyle}" 
+                Margin="10,0,10,0"/>
+                <!-- Privacy Policy -->
+                <Button Content="Privacy Policy" 
+                Command="{Binding PrivacyPolicyCommand}" 
+                Style="{StaticResource RoundedButtonStyle}" />
+            </StackPanel>
+        </StackPanel>
+
     </Grid>
 </Page>

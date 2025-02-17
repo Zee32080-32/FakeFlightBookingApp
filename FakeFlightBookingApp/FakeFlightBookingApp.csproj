@@ -6,6 +6,43 @@
 		<ImplicitUsings>enable</ImplicitUsings>
 		<UseWPF>true</UseWPF>
 	</PropertyGroup>
+	<ItemGroup>
+	  <None Remove="Pics\Colombia\Cartegena.jpeg" />
+	  <None Remove="Pics\Colombia\Cartegena.jpg" />
+	  <None Remove="Pics\Colombia\Food.jpg" />
+	  <None Remove="Pics\Colombia\Nature.jpg" />
+	  <None Remove="Pics\Colombia\SantaMarta.jpg" />
+	  <None Remove="Pics\Colombia\WhiteSandBeach.jpg" />
+	  <None Remove="Pics\DefaultUserLogo.jpg" />
+	  <None Remove="Pics\HomePageIcon.png" />
+	  <None Remove="Pics\Mexico\Aztec.png" />
+	  <None Remove="Pics\Mexico\Boats.jpeg" />
+	  <None Remove="Pics\Mexico\CenoteXcanche.jpeg" />
+	  <None Remove="Pics\Mexico\CentroHistoRicoPuebla.jpeg" />
+	  <None Remove="Pics\Mexico\StreetFood.jpg" />
+	  <None Remove="Pics\Pakistan\Building.jpg" />
+	  <None Remove="Pics\Pakistan\IslamabadMosque.jpg" />
+	  <None Remove="Pics\Pakistan\Mall_of_Lahore_1.jpg" />
+	  <None Remove="Pics\Pakistan\NationalMonument.jpg" />
+	  <None Remove="Pics\Pakistan\Pakistani_food.jpg" />
+	  <None Remove="Pics\Pakistan\River.jpg" />
+	  <None Remove="Pics\Pakistan\RiverSwatValleyPakistan.jpg" />
+	  <None Remove="Pics\Pakistan\SaltMine.jpg" />
+	  <None Remove="Pics\Pakistan\SaltMine_1.jpg" />
+	  <None Remove="Pics\Pakistan\SaltMine_2.jpg" />
+	  <None Remove="Pics\Romania\Building.jpg" />
+	  <None Remove="Pics\Romania\ConstantaCasinoRomania.jpg" />
+	  <None Remove="Pics\Romania\rBuilding.jpg" />
+	  <None Remove="Pics\Romania\RomaniaChateau.jpeg" />
+	  <None Remove="Pics\Romania\RomaniaCiucasLandscapeNatureLandscapes.jpg" />
+	  <None Remove="Pics\Romania\RomanianEasterFood.jpg" />
+	  <None Remove="Pics\Romania\Waterfall.jpg" />
+	  <None Remove="Pics\Senegal\Beach.jpg" />
+	  <None Remove="Pics\Senegal\Hotel.jpeg" />
+	  <None Remove="Pics\Senegal\PinkLake.jpg" />
+	  <None Remove="Pics\Senegal\Touba.jpg" />
+	  <None Remove="Pics\Senegal\Yassa.jpeg" />
+	</ItemGroup>
 
 	<ItemGroup>
 		<PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="8.0.8" />
@@ -26,5 +63,50 @@
 	<ItemGroup>
 	  <ProjectReference Include="..\FakeFlightBookingAPI\FakeFlightBookingAPI.csproj" />
 	  <ProjectReference Include="..\SharedModels\SharedModels.csproj" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <Resource Include="Pics\Colombia\Cartegena.jpg">
+	    <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+	  </Resource>
+	  <Resource Include="Pics\Colombia\Food.jpg">
+	    <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+	  </Resource>
+	  <Resource Include="Pics\DefaultUserLogo.jpg">
+	    <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+	  </Resource>
+	  <Resource Include="Pics\HomePageIcon.png">
+	    <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+	  </Resource>
+	  <Resource Include="Pics\Mexico\Aztec.png">
+	    <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+	  </Resource>
+	  <Resource Include="Pics\Mexico\StreetFood.jpg">
+	    <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+	  </Resource>
+	  <Resource Include="Pics\Pakistan\Building.jpg">
+	    <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+	  </Resource>
+	  <Resource Include="Pics\Pakistan\NationalMonument.jpg">
+	    <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+	  </Resource>
+	  <Resource Include="Pics\Pakistan\River.jpg">
+	    <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+	  </Resource>
+	  <Resource Include="Pics\Pakistan\SaltMine.jpg">
+	    <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+	  </Resource>
+	  <Resource Include="Pics\Romania\Building.jpg">
+	    <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+	  </Resource>
+	  <Resource Include="Pics\Romania\Waterfall.jpg">
+	    <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+	  </Resource>
+	  <Resource Include="Pics\Senegal\PinkLake.jpg">
+	    <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+	  </Resource>
+	  <Resource Include="Pics\Senegal\Touba.jpg">
+	    <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+	  </Resource>
 	</ItemGroup>
 </Project>

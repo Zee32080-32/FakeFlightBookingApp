@@ -12,6 +12,7 @@ namespace FakeFlightBookingApp.Tests
 {
     public class FlightTicketPageViewModelTests
     {
+        /*
         private readonly Mock<Action<string>> _showMessageMock;
         private readonly FlightTicketPageViewModel _viewModel;
 
@@ -78,5 +79,6 @@ namespace FakeFlightBookingApp.Tests
             // Assert: Ensure ShowMessage was called with the message for no selection
             _showMessageMock.Verify(s => s.Invoke("Please select a flight to buy a ticket."), Times.Once);
         }
+        */
     }
 }

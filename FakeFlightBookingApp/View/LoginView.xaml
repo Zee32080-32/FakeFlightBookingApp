@@ -6,37 +6,111 @@
       xmlns:local="clr-namespace:FakeFlightBookingApp.View"
       xmlns:vm="clr-namespace:FakeFlightBookingApp.ViewModel"
       mc:Ignorable="d" 
-      d:DesignHeight="450" d:DesignWidth="800"
+      d:DesignHeight="450" d:DesignWidth="950"
+      Style="{StaticResource PageBackgroundStyle}" 
       Loaded="Page_Loaded"
       Title="LoginView">
 
 
 
-    <Border BorderBrush="Black" BorderThickness="1" Background="White">
-        <Grid Width="600" Height="400">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="0.5*" />
-                <RowDefinition Height="0.5*" />
-                <RowDefinition Height="0.5*" />
-                <RowDefinition Height="0.5*" />
-                <RowDefinition Height="0.5*" />
-            </Grid.RowDefinitions>
+    <Grid Margin="10">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="0.5*" />
+            <RowDefinition Height="0.75*" />
+            <RowDefinition Height="0.75*" />
+            <RowDefinition Height="0.5*" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
 
-            <Label x:Name="Login_Label" Background="Transparent" FontSize="36" HorizontalContentAlignment="Center" Margin="5,5,5,5">Welcome Back Please Login</Label>
-            <Label x:Name="UserName_label" Background="Transparent" Grid.Row="1" Grid.Column="1" VerticalAlignment="Top" Margin="5,5,5,5">User Name</Label>
-            <TextBox Text="{Binding UserName}" Background="Transparent" Grid.Row="1" Grid.Column="1" VerticalAlignment="Bottom" Margin="5,5,5,5" AutomationProperties.HelpText="Enter Your User name"/>
-
-            <Label x:Name="Password_label" Background="Transparent" Grid.Row="2" Grid.Column="1" VerticalAlignment="Top" Margin="5,5,5,5">Password</Label>
-            <PasswordBox Background="Transparent" 
-                Grid.Row="2" Grid.Column="1" 
-                VerticalAlignment="Bottom" Margin="5,5,5,5" 
-                AutomationProperties.HelpText="Enter Your Password"
-                PasswordChanged="PasswordBox_PasswordChanged"
+        <Button Content="Go back to Main Page" 
+                HorizontalAlignment="Left" 
+                VerticalAlignment="Center" Style="{StaticResource RoundedButtonStyle}" 
+                Margin="10" Command="{Binding MainPageCommand}"
+                Grid.Row="0"
+                Grid.Column="0"
             />
 
-            <Button Content="Reset Password"  Command="{Binding ResetPasswordCommand}" Grid.Row="3" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="5,0,0,0" Background="Transparent" Foreground="Blue" />
-            <Button Content="Sign In" Command="{Binding SignInCommand}" HorizontalAlignment="Center" Grid.Row="3" VerticalAlignment="Center" Grid.Column="1" Margin="0,0,200,0" FontSize="20"/>
-            <Button Content="Create Account" Command="{Binding CreateAccountCommand}" HorizontalAlignment="Center" Grid.Row="3" VerticalAlignment="Center" Grid.Column="1" Margin="200,0,0,0" FontSize="20"/>
+        <Label FontSize="24" 
+               Grid.ColumnSpan="3" 
+               HorizontalContentAlignment="Center" 
+               Content="Welcome Back Please Login"
+               Foreground="White"
+        />
+
+        <Label x:Name="UserName_label"  
+               Grid.Row="1" Grid.Column="1" 
+               VerticalAlignment="Top" Foreground="White" 
+               HorizontalAlignment="Left"
+               Content="User Name"
+        />
+        <TextBox 
+            Style="{StaticResource RoundedTextBoxStyle}" Text="{Binding UserName}"  
+            Grid.Row="1" Grid.Column="1" AutomationProperties.HelpText="Enter Your User name" 
+            VerticalAlignment="Center"
+        />
+
+        <Label x:Name="Password_label" 
+            Foreground="White" Grid.Row="2" 
+            Content="Password"
+            Grid.Column="1" VerticalAlignment="Top"
+        /> 
+        <PasswordBox 
+            Grid.Row="2" Grid.Column="1" 
+            Style="{StaticResource RoundedPasswordBoxStyle}"
+            AutomationProperties.HelpText="Enter Your Password"
+            PasswordChanged="PasswordBox_PasswordChanged" VerticalAlignment="Center"
+        />
+
+        <!-- Status Label  -->
+        <Label x:Name="StatusLabel"
+            Content="{Binding StatusMessage}"
+            Foreground="White"
+            FontSize="14"
+            Grid.Column="1"
+            Grid.Row="2"                 
+            Padding="10" HorizontalAlignment="Left" VerticalAlignment="Bottom" 
+        />
+
+        <Button Grid.Column="1" 
+            Content="Reset Password" 
+            Style="{StaticResource RoundedButtonStyle}" 
+            Command="{Binding ResetPasswordCommand}" Grid.Row="3" 
+            HorizontalAlignment="Center" VerticalAlignment="Top"
+        />
+
+
+        <!-- Grid for buttons  -->
+        <Grid  Grid.Column="1" Grid.Row="4" Margin="0,10,0,0" VerticalAlignment="Top" HorizontalAlignment="Center">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <!-- Empty space for proper spacing -->
+                <ColumnDefinition Width="Auto" />
+                <!-- Create Account button -->
+                <ColumnDefinition Width="50"/>
+                <!-- Spacer column -->
+                <ColumnDefinition Width="Auto" />
+                <!-- Sign In button -->
+                <ColumnDefinition Width="*" />
+                <!-- Empty space for proper spacing -->
+            </Grid.ColumnDefinitions>
+
+            <Button 
+                Content="Sign In" 
+                Grid.Column="1" Style="{StaticResource RoundedButtonStyle}"  
+                Command="{Binding SignInCommand}" Padding="20" Width="100"
+            />
+            
+            <Button 
+                Content="Create Account" 
+                Grid.Column="3" Style="{StaticResource RoundedButtonStyle}" 
+                Command="{Binding CreateAccountCommand}" 
+            />
+            
         </Grid>
-    </Border>
+    </Grid>
 </Page>
